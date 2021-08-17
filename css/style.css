@@ -1,0 +1,157 @@
+* {
+  box-sizing: border-box;
+  position: relative;
+  vertical-align: top;
+  margin: 0;
+  padding: 0;
+  /* overflow: hidden; */
+  font-size: 1.6rem;
+  line-height: normal;
+}
+
+
+html {
+  font-size: 62.5%;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --background-global: #F9F0F0;
+  --font-red: #990000;
+
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color: var(--background-global);
+  max-width: 85rem;;
+  margin: auto;
+}
+
+#header {
+  display: flex;
+  justify-content: center;
+}
+
+#username {
+  margin: 2rem 0 2rem 1rem;
+  color: var(--font-red);
+  font-weight: 600;
+}
+
+.fas.fa-user {
+  margin-top: 2rem;
+}
+
+hr {
+  width: 80%;
+  margin:0 auto;
+}
+
+.space {
+  margin-bottom: 10rem;
+}
+
+#logo {
+  height: 10rem;
+  width: 25rem;
+  border: 0.1rem solid black;
+  margin: 0 auto;
+  color: var(--font-red);
+  font-size: 4rem;
+  line-height: 10rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+main {
+  padding-top: 15rem;
+  overflow-x: visible;
+}
+
+.slider {
+  height: 25rem;
+}
+
+.fas.fa-caret-left, .fas.fa-caret-right {
+  color: var(--font-red);
+  padding-top: 2rem;
+}
+
+.fas.fa-caret-left {
+  padding-right: 2rem;
+}
+
+.fas.fa-caret-right {
+  padding-left: 2rem;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.widget-ctn {
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.widget {
+  width: 22.7rem;
+  height: 12rem;
+  margin: 1rem;
+  border: 0.1rem solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-logo {
+  flex-grow: 2.5;
+  background-color:white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.widget-title {
+  flex-grow: 1.25;
+  background-color:blue;
+  border-top: 0.1rem solid black;
+  background:linear-gradient(#FFFFFF 0%, #B8B8B8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+h3 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.75rem;
+  margin-bottom: 15rem;
+}
+
+.php-img {
+  width: 5rem;
+}
+
+.mysql-img {
+  width: 6rem;
+}
+
+.js-img {
+  width: 6rem;
+}
+
+.njs-img {
+  width: 6rem;
+}
+
