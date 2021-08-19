@@ -15,6 +15,8 @@ html {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --background-global: #F9F0F0;
   --font-red: #990000;
+  --grey-global: #B8B8B8;
+  --grey-light-global: #E3E3E3;
 
 }
 
@@ -34,14 +36,14 @@ body {
   justify-content: center;
 }
 
-#username {
+.header-item {
   margin: 2rem 0 2rem 1rem;
   color: var(--font-red);
   font-weight: 600;
 }
 
-.fas.fa-user {
-  margin-top: 2rem;
+.fas.fa-user, .fas.fa-home {
+  margin-top: 2.2rem;
 }
 
 hr {
