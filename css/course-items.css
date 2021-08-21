@@ -134,7 +134,52 @@ main {
 
 #quiz {
   width: 56rem;
-  height: 31.5rem;
+}
+
+#quiz-question {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.quiz-qu-nr-hi {
+  font-weight: 600;
+  color: var(--font-red);
+}
+
+#quiz-hdg {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.question-item {
+  margin-bottom: 1rem;
+}
+
+.qu-checkbox {
+  margin: 0.5rem 0.5rem 0 0;
+}
+
+#question-complete-btn {
+  padding: 0.25rem 0;
+  width: 30%;
+  margin: 0.30rem 0;
+  font-size: 1.5rem;
+  border-radius: 0.55rem;
+  border: 0.1rem solid black;
+  color: white;
+  background-color: var(--font-red);
+}
+
+#question-complete-btn:hover {
+  background-color: black;
+}
+
+#btn-ctn {
+  display: flex;
+  margin-top: 3rem;
+  justify-content: center;
 }
 
 iframe {

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/course-items.css">
+    <script src="https://kit.fontawesome.com/5782589434.js" crossorigin="anonymous"></script>
+    <title>PHP Fundamentals - 3. Quiz</title>
+  </head>
+  <body>
+    <main>
+      <div id="nav-left">
+        <div id="course-title-ctn">
+          <i class="fas fa-graduation-cap fa-2x"></i>
+          <span id="course-title">PHP Fundamentals</span>
+        </div>
+        <div id="course-completion-ctn">
+          <span id="course-completion">Course completion: <span id="course-completion-pc">67%</span></span>
+          <div id="progress-bar">
+            <div id="progress-bar-filled"></div>
+          </div>
+        </div>
+        <div id="course-items-ctn">
+          <div class="course-item">
+            <i class="fas fa-play"></i>
+            <span class="course-item-title">1. Variables and Functions</span>
+          </div>
+          <div class="course-item">
+            <i class="fas fa-play"></i>
+            <span class="course-item-title">2. Arrays</span>
+          </div>
+          <div class="course-item active">
+            <i class="fas fa-question-circle"></i>
+            <span class="course-item-title">3. Quiz</span>
+          </div>
+        </div>
+      </div>
+      <div id="content">
+        <a href="#">
+          <div id="go-back-ctn">
+            <span id="go-back-txt">Go back</span>
+            <i class="fas fa-times fa-2x"></i>
+          </div>
+        </a>
+        <div id="quiz-ctn">
+          <div id="quiz-hdg">
+            <span id="quiz-content">3. Quiz</span>
+            <span id="quiz-qu-nr">Question <span class="quiz-qu-nr-hi">1</span> of <span class="quiz-qu-nr-hi">5</span></span>
+          </div>
+          <div id="quiz">
+            <div class="question-item">
+              <span id="quiz-question">Which of the following examples will correctly create an array?</span>
+              <br>
+              <input type="checkbox" class="qu-checkbox" id="a"><label for="a">a) virus[0] = "Covid-19";</label>
+              <br>
+            </div>
+            <div class="question-item">
+              <input type="checkbox" class="qu-checkbox" id="b"><label for="b">b) $virus[] = array("Covid-19");</label>
+              <br>
+            </div>
+            <div class="question-item">
+              <input type="checkbox" class="qu-checkbox" id="c"><label for="c">c) $virus[0] = "Covid-19";</label>
+              <br>
+            </div>
+            <div class="question-item">
+              <input type="checkbox" class="qu-checkbox" id="d"><label for="d">d) $virus = array("Covid-19");</label>
+            </div>
+          </div>
+          <div id="btn-ctn">
+            <button id="question-complete-btn">Submit Answer</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+
+  </body>
+</html>
