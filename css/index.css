@@ -15,6 +15,10 @@ body {
   font-weight: 600;
 }
 
+.header-item:hover {
+  color: black;
+}
+
 .fas.fa-user, .fas.fa-home {
   margin-top: 2.2rem;
 }
@@ -125,3 +129,34 @@ h3 {
   width: 6rem;
 }
 
+button {
+  padding: 0.25rem 0;
+  width: 10rem;
+  margin: 0.30rem 0;
+  font-size: 1.5rem;
+  border-radius: 0.55rem;
+  border: 0.1rem solid black;
+}
+
+
+.btn-active {
+  background-color: var(--grey-global);
+}
+
+.btn-inactive {
+  background-color: var(--grey-light-global);
+}
+
+.btn-inactive:hover {
+  background-color: var(--grey-global);
+}
+
+.btn-red:hover {
+  background-color: black;
+}
+
+.btn-red {
+  margin-top: 5rem;
+  background-color: var(--font-red);
+  color: white;
+}
