@@ -1,0 +1,38 @@
+main {
+  padding-top: 5.5rem;
+}
+
+span:first-of-type {
+  margin-right: 3rem;
+}
+
+#course-desc-ctn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#course-img {
+  flex-grow: 0;
+  height: 18rem;
+  width: 26.245rem;
+  margin-bottom: 5.5rem;
+}
+
+.space {
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+#course-desc-txt {
+  width: 80%;
+  margin-top: 2rem;
+}
+
+#enroll-btn {
+  margin: 3rem 0;
+}
