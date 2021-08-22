@@ -15,11 +15,68 @@ body {
   font-weight: 600;
 }
 
+.header-item-dropdown {
+  margin: 0 0 0 1rem;
+  top: 2rem;
+  color: var(--font-red);
+  font-weight: 600;
+}
+
 .header-item:hover {
   color: black;
 }
 
-.fas.fa-user, .fas.fa-home {
+.dropdown {
+  position: relative;
+  padding-bottom: 3rem;
+  margin-bottom: 1rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 5rem;
+  background-color: var(--grey-light-global);
+  min-width: 160px;
+  border-radius: 0.55rem;
+  border: 0.1rem solid black;
+  box-shadow: 0 0.8rem 1.6rem 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  display: block;
+}
+
+#hr-dropdown {
+  width: 30%;
+}
+
+.dropdown-content a {
+  text-align: center;
+  border-radius: 0.55rem 0.55rem 0 0;
+}
+
+.dropdown-content a:last-child {
+  border-radius: 0 0 0.55rem 0.55rem;
+}
+
+.dropdown-content a:hover {
+  background-color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.fas.fa-user {
+  top: 2.2rem;
+}
+
+.fas.fa-home {
   margin-top: 2.2rem;
 }
 
@@ -159,4 +216,8 @@ button {
   margin-top: 5rem;
   background-color: var(--font-red);
   color: white;
+}
+
+h3:hover {
+  background-color: var(--font-red);
 }

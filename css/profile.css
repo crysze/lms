@@ -28,6 +28,10 @@ main {
   line-height: 1;
 }
 
+.fas.fa-user {
+  top: 0;
+}
+
 #hr-sidebar {
   margin: 1rem 0;
   width: 20%;
