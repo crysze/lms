@@ -1,0 +1,104 @@
+main {
+  padding-top: 10rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  color: var(--font-red);
+  font-size: 3rem;
+  margin-bottom: 3.5rem;
+  font-weight: 650;
+}
+
+#form-ctn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+label {
+  font-size: 2.25rem;
+  margin-right: 1rem;
+}
+
+input[type="submit"] {
+  margin-top: 3.5rem;
+  background-color: var(--font-red);
+  color: white;
+  padding: 0.25rem 0;
+  width: 10rem;
+  font-size: 1.5rem;
+  border-radius: 0.55rem;
+  border: 0.1rem solid black;
+}
+
+input[type="submit"]:hover {
+  background-color: black;
+}
+
+input[type="text"], input[type="password"] {
+  border-radius: 0.55rem;
+  border: 0.1rem solid black;
+  height: 2.5rem;
+  color: var(--font-red);
+  padding: 1rem;
+}
+
+.asterisk {
+  color: var(--font-red);
+}
+
+#submit-btn-ctn {
+  display: flex;
+  justify-content: center;
+}
+
+#reg-link {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#reg-here {
+  color: var(--font-red);
+  font-weight: 600;
+}
+
+#reg-here:hover {
+  color: black;
+}
+
+#missing-fields-ctn {
+  display: none;
+}
+
+#missing-fields, #mandatory-fields {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fas.fa-exclamation-circle {
+  margin-right: 0.75rem;
+}
+
+#missing-fields-txt {
+  font-weight: 600;
+}
+
+.missing {
+  padding: 0.3rem;
+  border: 0.2rem solid var(--font-red);
+  border-radius: 0.55rem;
+}
+
