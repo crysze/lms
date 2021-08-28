@@ -81,7 +81,11 @@ input[type="text"], input[type="password"] {
   display: none;
 }
 
-#missing-fields, #mandatory-fields {
+#password-wrong-ctn {
+  display: none;
+}
+
+#missing-fields, #mandatory-fields, #password-wrong {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
