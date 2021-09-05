@@ -77,15 +77,11 @@ input[type="text"], input[type="password"] {
   color: black;
 }
 
-#missing-fields-ctn {
+#missing-fields-ctn, #password-wrong-ctn, #email-taken-ctn, #response-ctn {
   display: none;
 }
 
-#password-wrong-ctn {
-  display: none;
-}
-
-#missing-fields, #mandatory-fields, #password-wrong {
+#missing-fields, #mandatory-fields, #password-wrong, #email-taken, #response {
   margin-top: 2rem;
   display: flex;
   justify-content: center;
@@ -96,7 +92,7 @@ input[type="text"], input[type="password"] {
   margin-right: 0.75rem;
 }
 
-#missing-fields-txt {
+#missing-fields-txt, #password-wrong-txt, #email-taken-txt, #response-txt {
   font-weight: 600;
 }
 
@@ -104,5 +100,9 @@ input[type="text"], input[type="password"] {
   padding: 0.3rem;
   border: 0.2rem solid var(--font-red);
   border-radius: 0.55rem;
+}
+
+#login-link {
+  color: var(--font-red);
 }
 

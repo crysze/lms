@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/register-login.css">
     <script src="https://kit.fontawesome.com/5782589434.js" crossorigin="anonymous"></script>
+    <script src="js/login.js" defer></script>
     <title>Login</title>
   </head>
   <body>
@@ -20,7 +21,7 @@
     <main>
       <h1>Log in</h1>
       <br>
-      <form>
+      <form method="POST">
         <div id="form-ctn">
           <div class="form-item">
             <label for="email">Email</label>
@@ -40,7 +41,30 @@
           <span id="first-time">First-time visitor?</span>
           <span id="reg-here"><a href="register.html">Register here</a></span>
         </div>
-
+        <div id="missing-fields-ctn">
+          <div id="missing-fields">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+            <span id="missing-fields-txt">Please fill in the missing fields</span>
+          </div>
+        </div>
+        <div id="password-wrong-ctn">
+          <div id="password-wrong">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+            <span id="missing-fields-txt">Passwords don't match</span>
+          </div>
+        </div>
+        <div id="email-taken-ctn">
+          <div id="email-taken">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+            <span id="email-taken-txt"></span>
+          </div>
+        </div>
+        <div id="response-ctn">
+          <div id="response">
+            <i class="fas fa-exclamation-circle fa-2x"></i>
+            <span id="response-txt"></span>
+          </div>
+        </div>
       </form>
     </main>
     </body>

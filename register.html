@@ -14,14 +14,14 @@
     <header>
       <div id="header">
         <i class="fas fa-home"></i>
-        <span class="header-item"><a href="#">Home</a></span>
+        <span class="header-item"><a href="index.html">Home</a></span>
       </div>
       <hr>
     </header>
     <main>
       <h1>Register</h1>
       <br>
-      <form>
+      <form method="POST">
         <div id="form-ctn">
           <div class="form-item">
             <label for="firstname">First Name<span class="asterisk">*</span></label>
@@ -55,16 +55,10 @@
         <div id="mandatory-fields">
           <span id="mandatory-fields-txt"><span class="asterisk">*</span> Mandatory fields</span>
         </div>
-        <div id="missing-fields-ctn">
-          <div id="missing-fields">
+        <div id="response-ctn">
+          <div id="response">
             <i class="fas fa-exclamation-circle fa-2x"></i>
-            <span id="missing-fields-txt">Please fill in the missing fields</span>
-          </div>
-        </div>
-        <div id="password-wrong-ctn">
-          <div id="password-wrong">
-            <i class="fas fa-exclamation-circle fa-2x"></i>
-            <span id="missing-fields-txt">Passwords don't match</span>
+            <span id="response-txt"></span>
           </div>
         </div>
       </form>
