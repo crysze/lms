@@ -219,5 +219,5 @@ button {
 }
 
 h3:hover {
-  background-color: var(--font-red);
+  color: var(--font-red);
 }
