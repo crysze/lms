@@ -121,4 +121,30 @@ class User {
           return password_verify($password, $user->password);
       }
   }
-}
+
+    /**
+     * Fetches the first name of a logged-in user
+     *
+     * @param $conn Database connection
+     *
+     * @param $email User's email address
+     *
+     * @return string Returns the first name of the user
+     */
+    public static function get_username($conn, $email) {
+      $sql = 'SELECT *
+              FROM user
+              WHERE email = :email';
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+      $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      $firstname = $row['firstname'];
+      $lastname = $row['lastname'];
+
+      return "{$firstname} {$lastname}";
+    }
+  }
