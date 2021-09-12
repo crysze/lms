@@ -8,7 +8,7 @@ main {
 
 #nav-left {
   width: 25%;
-  height: 70rem;
+  height: 100vh;
   background-color: var(--background-global);
   border-right: 0.1rem solid black;
 }

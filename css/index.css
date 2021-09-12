@@ -72,7 +72,7 @@ body {
   display: block;
 }
 
-.fas.fa-user {
+.fas.fa-user, .fa-user-plus {
   top: 2.2rem;
 }
 
@@ -132,6 +132,14 @@ h2 {
 .widget-ctn {
   display: inline-flex;
   justify-content: space-between;
+}
+
+.widget:hover .widget-logo {
+  background-color: #f5e6e6;
+}
+
+.widget:hover .widget-title {
+  background:linear-gradient(#B8B8B8 0%, #FFFFFF 100%);
 }
 
 .widget {
@@ -220,4 +228,9 @@ button {
 
 h3:hover {
   color: var(--font-red);
+}
+
+#logout {
+  text-align: center;
+  font-weight: 600;
 }
