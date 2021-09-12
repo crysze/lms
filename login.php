@@ -8,7 +8,7 @@ require 'classes/Auth.php';
 
 // Initiate the session
 
-session_start(['cookie_secure' => true,'cookie_httponly' => true]); // Why not put this inside the if statement?
+session_start(); // Why not put this inside the if statement?
 
 // Establish the database connection
 
@@ -19,6 +19,7 @@ $conn = $db->getConn();
 
 if (User::authentication($conn, $_POST['email'], $_POST['password'])) {
     Auth::login();
+    $_SESSION['username'] = User::get_username($conn, $_POST['email']);
     echo "You've logged in successfully. Redirecting...";
     return;
 }
