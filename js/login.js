@@ -6,7 +6,7 @@ const FORM = document.querySelector('form');
 
 FORM.addEventListener("submit", (event) => {
 
-  // Prevent default form submission (sending the form data to register.html)
+  // Prevent default form submission (sending the form data to register.php)
 
   event.preventDefault();
 
@@ -82,10 +82,10 @@ FORM.addEventListener("submit", (event) => {
         }
         document.querySelector('#submit-btn-ctn').style.display = 'none';
 
-        // Redirect the user to index.html after 3 seconds
+        // Redirect the user to index.php after 3 seconds
 
         setTimeout(() => {
-          window.location.href= 'index.html';
+          window.location.href= 'index.php';
           }, 3000);
       }
     }

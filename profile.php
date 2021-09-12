@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +14,7 @@
   <header>
     <div id="header">
       <i class="fas fa-home"></i>
-      <span class="header-item"><a href="#">Home</a></span>
+      <span class="header-item"><a href="index.php">Home</a></span>
     </div>
     <hr>
   </header>
@@ -22,12 +23,12 @@
       <div id="sidebar-nav">
         <i class="fas fa-user fa-7x"></i>
         <br>
-        <span id="username">Christina<br>Stoll</span>
+        <span id="username"><?= $_SESSION['username']; ?></span>
         <hr id="hr-sidebar">
         <span id="courses">Courses</span>
         <button class="btn-active">In Progress</button>
         <button class="btn-inactive">Completed</button>
-        <button class="btn-red">Logout</button>
+        <button class="btn-red"><a href="logout.php">Logout</a></button>
       </div>
     </div>
     <div id="table">

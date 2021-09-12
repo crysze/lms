@@ -14,7 +14,7 @@
     <header>
       <div id="header">
         <i class="fas fa-home"></i>
-        <span class="header-item"><a href="index.html">Home</a></span>
+        <span class="header-item"><a href="index.php">Home</a></span>
       </div>
       <hr>
     </header>

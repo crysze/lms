@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -11,15 +12,28 @@
   <body>
     <header>
       <div id="header">
-        <div class="dropdown">
-          <i class="fas fa-user"></i>
-          <span class="header-item-dropdown"><a href="#">Christina Stoll</a></span>
-          <div class="dropdown-content">
-            <a href="#">User Profile</a>
-            <hr id="hr-dropdown">
-            <a href="#">Logout</a>
+        <?php
+        if (isset($_SESSION['username'])) {
+          echo "
+          <div class='dropdown'>
+            <i class='fas fa-user'></i>
+            <span class='header-item-dropdown'><a href='profile.php'>{$_SESSION['username']}</a></span>
+            <div class='dropdown-content'>
+              <a href='profile.php'>User Profile</a>
+              <hr id='hr-dropdown'>
+              <a href='logout.php'>Logout</a>
+            </div>
           </div>
-        </div>
+          ";
+          } else {
+            echo "
+            <div id='header'>
+              <i class='fas fa-user'></i>
+              <span class='header-item'><a href='user-login.php'>Login / Register</a></span>
+            </div>
+            ";
+        }
+        ?>
       </div>
       <hr>
       <div class="space"></div>
@@ -32,14 +46,16 @@
       <div class="slider">
         <i class="fas fa-caret-left fa-5x"></i>
         <div class="widget-ctn">
-          <div class="widget">
-            <div class="widget-logo">
-              <img class="php-img" src="img/php.png">
+          <a href="course-items-video.html">
+            <div class="widget">
+              <div class="widget-logo">
+                <img class="php-img" src="img/php.png">
+              </div>
+              <div class="widget-title">
+                PHP Fundamentals
+              </div>
             </div>
-            <div class="widget-title">
-              PHP Fundamentals
-            </div>
-          </div>
+          </a>
           <div class="widget">
             <div class="widget-logo">
               <img class="php-img" src="img/php.png">
@@ -90,7 +106,6 @@
         </div>
         <i class="fas fa-caret-right fa-5x"></i>
       </div>
-      <h3><a href="#">All Courses</a></h3>
     </main>
 
   </body>

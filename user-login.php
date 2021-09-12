@@ -14,7 +14,7 @@
     <header>
       <div id="header">
         <i class="fas fa-home"></i>
-        <span class="header-item"><a href="#">Home</a></span>
+        <span class="header-item"><a href="index.php">Home</a></span>
       </div>
       <hr>
     </header>
@@ -39,7 +39,7 @@
         </div>
         <div id="reg-link">
           <span id="first-time">First-time visitor?</span>
-          <span id="reg-here"><a href="register.html">Register here</a></span>
+          <span id="reg-here"><a href="user-register.php">Register here</a></span>
         </div>
         <div id="missing-fields-ctn">
           <div id="missing-fields">

@@ -6,7 +6,7 @@ const FORM = document.querySelector('form');
 
 FORM.addEventListener("submit", (event) => {
 
-  // Prevent default form submission (sending the form data to register.html)
+  // Prevent default form submission (sending the form data to register.php)
 
   event.preventDefault();
 

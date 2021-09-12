@@ -30,7 +30,7 @@ if ($user->username_check($conn, $user->email)) {
 // Create a new user account
 
 if ($user->create($conn)) {
-  echo 'Your user account has been created successfully. Please <a href="login.html"><span id="login-link">log in here</span></a>.';
+  echo 'Your user account has been created successfully. Please <a href="user-login.php"><span id="login-link">log in here</span></a>.';
   return;
 }
 
