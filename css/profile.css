@@ -21,7 +21,7 @@ main {
 
 #username {
   font-weight: 600;
-  color: var(--font-red);
+  color: var(--grey-dark);
   font-size: 2rem;
   margin: 1rem 0;
   text-align: center;
@@ -79,7 +79,7 @@ tr:not(:last-child):not(:first-child) {
 #total-courses {
   font-size: 1.5rem;
   padding-left: 1.5rem;
-  color: var(--font-red);
+  color: var(--grey-dark);
 }
 
 
