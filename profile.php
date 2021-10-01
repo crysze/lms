@@ -1,4 +1,11 @@
-<?php session_start(); ?>
+<?php session_start();
+
+if (!$_SESSION['is_logged_in']) {
+  header("Location: user-login.php", TRUE, 301);
+  exit();
+  // see if you can implement a redirect message with JS via status code 301
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
