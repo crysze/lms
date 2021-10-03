@@ -7,38 +7,17 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/reset.css">
     <script src="https://kit.fontawesome.com/5782589434.js" crossorigin="anonymous"></script>
-    <title>Code Source</title>
+    <title>Code Loop</title>
   </head>
   <body>
     <header>
       <div id="header">
-        <?php
-        if (isset($_SESSION['username'])) {
-          echo "
-          <div class='dropdown'>
-            <i class='fas fa-user'></i>
-            <span class='header-item-dropdown'><a href='profile.php'>{$_SESSION['username']}</a></span>
-            <div class='dropdown-content'>
-              <a href='profile.php'>User Profile</a>
-              <hr id='hr-dropdown'>
-              <a href='logout.php'>Logout</a>
-            </div>
-          </div>
-          ";
-          } else {
-            echo "
-            <div id='header'>
-              <i class='fas fa-user'></i>
-              <span class='header-item'><a href='user-login.php'>Login / Register</a></span>
-            </div>
-            ";
-        }
-        ?>
+      <?php require 'header.php' ?>
       </div>
       <hr>
       <div class="space"></div>
       <div id="logo">
-        LOGO
+        <img src="img/logo.png">
       </div>
     </header>
     <main>
@@ -46,7 +25,7 @@
       <div class="slider">
         <i class="fas fa-caret-left fa-5x"></i>
         <div class="widget-ctn">
-          <a href="course-items-video.html">
+          <a href="course.php?id=1">
             <div class="widget">
               <div class="widget-logo">
                 <img class="php-img" src="img/php.png">
@@ -56,6 +35,7 @@
               </div>
             </div>
           </a>
+        <a href="course.php?id=2">
           <div class="widget">
             <div class="widget-logo">
               <img class="php-img" src="img/php.png">
@@ -64,6 +44,8 @@
               PHP OOP
             </div>
           </div>
+        </a>
+        <a href="course.php?id=3">
           <div class="widget">
             <div class="widget-logo">
               <img class="mysql-img" src="img/mysql.svg">
@@ -72,37 +54,44 @@
               MySQL Fundamentals
             </div>
           </div>
-        </div>
+        </a>
+      </div>
         <i class="fas fa-caret-right fa-5x"></i>
       </div>
       <h2>JavaScript</h2>
       <div class="slider">
         <i class="fas fa-caret-left fa-5x"></i>
         <div class="widget-ctn">
-          <div class="widget">
-            <div class="widget-logo">
-              <img class="js-img" src="img/js.png">
+          <a href="course.php?id=4">
+            <div class="widget">
+              <div class="widget-logo">
+                <img class="js-img" src="img/js.png">
+              </div>
+              <div class="widget-title">
+                JS Fundamentals
+              </div>
             </div>
-            <div class="widget-title">
-              JS Fundamentals
+          </a>
+          <a href="course.php?id=5">
+            <div class="widget">
+              <div class="widget-logo">
+                <img class="js-img" src="img/js.png">
+              </div>
+              <div class="widget-title">
+                JS OOP
+              </div>
             </div>
-          </div>
-          <div class="widget">
-            <div class="widget-logo">
-              <img class="js-img" src="img/js.png">
+          </a>
+          <a href="course.php?id=6">
+            <div class="widget">
+              <div class="widget-logo">
+                <img class="njs-img" src="img/node_js.png">
+              </div>
+              <div class="widget-title">
+                Node JS
+              </div>
             </div>
-            <div class="widget-title">
-              JS OOP
-            </div>
-          </div>
-          <div class="widget">
-            <div class="widget-logo">
-              <img class="njs-img" src="img/node_js.png">
-            </div>
-            <div class="widget-title">
-              Node JS
-            </div>
-          </div>
+          </a>
         </div>
         <i class="fas fa-caret-right fa-5x"></i>
       </div>
