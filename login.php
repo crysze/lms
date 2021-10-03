@@ -20,6 +20,7 @@ $conn = $db->getConn();
 if (User::authentication($conn, $_POST['email'], $_POST['password'])) {
     Auth::login();
     $_SESSION['username'] = User::get_username($conn, $_POST['email']);
+    $_SESSION['user_id'] = User::get_user_id($conn, $_POST['email']);
     echo "You've logged in successfully. Redirecting...";
     return;
 }
