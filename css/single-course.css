@@ -2,7 +2,7 @@ main {
   padding-top: 5.5rem;
 }
 
-span:first-of-type {
+span:first-of-type:not(#course-desc-txt, #login-link) {
   margin-right: 3rem;
 }
 
@@ -31,8 +31,39 @@ h1 {
 #course-desc-txt {
   width: 80%;
   margin-top: 2rem;
+  text-align: justify;
 }
 
 #enroll-btn {
   margin: 3rem 0;
 }
+
+#login-prompt {
+  font-weight: 600;
+  margin-top: 3rem;
+  margin-left: 1rem;
+}
+
+#login-link {
+  color: var(--font-red);
+}
+
+#login-link:hover {
+  color: black;
+}
+
+#login-prompt, #login-link {
+  line-height: 3.2rem;
+}
+
+.fas.fa-exclamation-circle.fa-2x {
+  margin-right: 0.25rem;
+}
+
+#post-enroll {
+  margin-top: 1rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+

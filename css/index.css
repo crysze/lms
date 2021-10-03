@@ -90,9 +90,7 @@ hr {
 }
 
 #logo {
-  height: 10rem;
-  width: 25rem;
-  border: 0.1rem solid black;
+  height: 15rem;
   margin: 0 auto;
   color: var(--font-red);
   font-size: 4rem;
@@ -102,7 +100,7 @@ hr {
 }
 
 main {
-  padding-top: 15rem;
+  padding-top: 10rem;
   overflow-x: visible;
 }
 
@@ -233,4 +231,8 @@ h3:hover {
 #logout {
   text-align: center;
   font-weight: 600;
+}
+
+#logo img {
+  height: 15rem;
 }
