@@ -5,6 +5,16 @@ if (!$_SESSION['is_logged_in']) {
   exit();
   // see if you can implement a redirect message with JS via status code 301
 }
+
+require 'classes/Database.php';
+require 'classes/Course.php';
+
+$db = new Database();
+$conn = $db->getConn();
+
+$enrolments = Course::allEnrolments($conn, $_SESSION['user_id']);
+$enrolmentCount = count($enrolments, COUNT_NORMAL);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,28 +53,15 @@ if (!$_SESSION['is_logged_in']) {
         <th>Course</th>
         <th>Enrolment</th>
         <th>Progress</th>
-        <tr>
-          <td>PHP Fundamentals</td>
-          <td>05-Feb-2021</td>
-          <td>40%</td>
-        </tr>
-        <tr>
-          <td>JS Fundamentals</td>
-          <td>12-Mar-2021</td>
-          <td>60%</td>
-        </tr>
-        <tr>
-          <td>JS OOP</td>
-          <td>16-Jun-2021</td>
-          <td>40%</td>
-        </tr>
-        <tr>
-          <td>MySQL Fundamentals</td>
-          <td>23-Jul-2021</td>
-          <td>40%</td>
-        </tr>
+        <?php foreach ($enrolments as $enrolment) { ?>
+          <tr>
+            <td><a href="./course.php?id=<?= $enrolment['id'] ?>"><?= $enrolment['title']; ?></a></td>
+            <td><?= $enrolment['date']; ?></td>
+            <td><?= ($enrolment['progress'] * 100); ?>%</td>
+          </tr>
+        <?php } ?>
       </table>
-      <span id="total-courses">You are currently enrolled in <span id="course-number">4</span> courses</span>
+      <span id="total-courses">You are currently enrolled in <span id="course-number"><?= $enrolmentCount; ?></span> course(s)</span>
     </div>
   </main>
 
