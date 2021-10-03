@@ -123,7 +123,7 @@ class User {
   }
 
     /**
-     * Fetches the first name of a logged-in user
+     * Fetches the first and last name of a logged-in user
      *
      * @param $conn Database connection
      *
@@ -146,5 +146,30 @@ class User {
       $lastname = $row['lastname'];
 
       return "{$firstname} {$lastname}";
+    }
+
+        /**
+     * Fetches the user ID of a logged-in user
+     *
+     * @param $conn Database connection
+     *
+     * @param $email User's email address
+     *
+     * @return string Returns the first name of the user
+     */
+    public static function get_user_id($conn, $email) {
+      $sql = 'SELECT *
+              FROM user
+              WHERE email = :email';
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+      $stmt->execute();
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      $id = $row['userid'];
+
+      return $id;
     }
   }
