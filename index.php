@@ -10,16 +10,18 @@
     <title>Code Loop</title>
   </head>
   <body>
-    <header>
-      <div id="header">
-      <?php require 'header.php' ?>
-      </div>
-      <hr>
-      <div class="space"></div>
-      <div id="logo">
-        <img src="img/logo.png">
-      </div>
-    </header>
+    <div id="header-ctn">
+      <header>
+        <div id="header">
+        <?php require 'header.php' ?>
+        </div>
+        <hr>
+        <div class="space"></div>
+      </header>
+    </div>
+        <div id="logo">
+          <img src="img/logo.png">
+        </div>
     <main>
       <h2>PHP / MySQL</h2>
       <div class="slider">
