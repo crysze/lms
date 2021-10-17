@@ -148,7 +148,7 @@ class User {
       return "{$firstname} {$lastname}";
     }
 
-        /**
+    /**
      * Fetches the user ID of a logged-in user
      *
      * @param $conn Database connection
