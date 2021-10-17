@@ -100,8 +100,9 @@ FORM.addEventListener("submit", (event) => {
     }
 
     // Send the form values to register.php
-
-    XHR.send(userFormData);
+    setTimeout(() => {
+      XHR.send(userFormData);
+    }, 3000)
 
     // 'Processing' should be displayed while the script is loading returnData from register.php
 
