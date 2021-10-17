@@ -120,7 +120,7 @@ main {
 }
 
 #video-ctn, #quiz-ctn {
-  margin-left: 15rem;
+  margin: auto;
   width: 56rem;
   display: flex;
   flex-direction: column;
@@ -130,6 +130,10 @@ main {
   font-weight: 600;
   font-size: 2rem;
   margin-bottom: 1.5rem;
+}
+
+#video-order, #video-title {
+  all: revert;
 }
 
 #quiz {
@@ -213,7 +217,7 @@ iframe {
 }
 
 #item-completion-ctn {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   display: flex;
   justify-content: center;
 }
@@ -229,4 +233,9 @@ iframe {
 input[type="checkbox"] {
   color: var(--font-red);
 }
+
+button {
+  width: 12rem;
+}
+
 

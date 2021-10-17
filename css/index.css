@@ -1,16 +1,31 @@
 body {
+  box-sizing: content-box;
   background-color: var(--background-global);
-  max-width: 85rem;;
+  max-width: 85rem;
   margin: auto;
+}
+
+header {
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  left: 50%;
 }
 
 #header {
   display: flex;
   justify-content: center;
+  background-color: white;
+}
+
+#header-ctn {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
 }
 
 .header-item {
-  margin: 2rem 0 2rem 1rem;
+  margin: 2rem 2rem 2rem 1rem;
   color: var(--font-red);
   font-weight: 600;
 }
@@ -81,12 +96,12 @@ body {
 }
 
 hr {
-  width: 80%;
-  margin:0 auto;
+  margin: 0 auto;
+  height: 0.1rem;
 }
 
 .space {
-  margin-bottom: 10rem;
+  margin-bottom: 7rem;
 }
 
 #logo {
@@ -100,12 +115,12 @@ hr {
 }
 
 main {
-  padding-top: 10rem;
+  padding-top: 7rem;
   overflow-x: visible;
 }
 
 .slider {
-  height: 25rem;
+  height: 20rem;
 }
 
 .fas.fa-caret-left, .fas.fa-caret-right {
@@ -121,10 +136,17 @@ main {
   padding-left: 2rem;
 }
 
+.fas.fa-caret-left:hover, .fas.fa-caret-right:hover {
+  color: black;
+}
+
 h2 {
+  display: inline-block;
   font-weight: 600;
   font-size: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 6rem;
+  line-height: 60%;
+  border-bottom: 0.6rem solid var(--grey-global);
 }
 
 .widget-ctn {
@@ -133,7 +155,7 @@ h2 {
 }
 
 .widget:hover .widget-logo {
-  background-color: #f5e6e6;
+  background-color: var(--grey-light-global);
 }
 
 .widget:hover .widget-title {
@@ -145,13 +167,17 @@ h2 {
   height: 12rem;
   margin: 1rem;
   border: 0.1rem solid black;
+  border-radius: 1rem;
   display: flex;
   flex-direction: column;
+  overflow: visible;
+  box-shadow: 0 0 1rem 0.2rem var(--grey-global);
 }
 
 .widget-logo {
   flex-grow: 2.5;
   background-color:white;
+  border-radius: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,6 +187,7 @@ h2 {
   flex-grow: 1.25;
   background-color:blue;
   border-top: 0.1rem solid black;
+  border-radius: 0 0 1rem 1rem;
   background:linear-gradient(#FFFFFF 0%, #B8B8B8 100%);
   display: flex;
   align-items: center;
@@ -190,38 +217,6 @@ h3 {
 
 .njs-img {
   width: 6rem;
-}
-
-button {
-  padding: 0.25rem 0;
-  width: 10rem;
-  margin: 0.30rem 0;
-  font-size: 1.5rem;
-  border-radius: 0.55rem;
-  border: 0.1rem solid black;
-}
-
-
-.btn-active {
-  background-color: var(--grey-global);
-}
-
-.btn-inactive {
-  background-color: var(--grey-light-global);
-}
-
-.btn-inactive:hover {
-  background-color: var(--grey-global);
-}
-
-.btn-red:hover {
-  background-color: black;
-}
-
-.btn-red {
-  margin-top: 5rem;
-  background-color: var(--font-red);
-  color: white;
 }
 
 h3:hover {
