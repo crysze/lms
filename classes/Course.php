@@ -125,6 +125,16 @@ class Course {
         }
       }
 
+    /**
+     * Return all of the courses a specific user is enrolled in
+     *
+     * @param $conn Database connection
+     *
+     * @param $user_id User's ID
+     *
+     * @return Array An array containing all of the courses a user is enrolled in
+     */
+
       public static function allEnrolments($conn, $user_id) {
         $sql = 'SELECT enrolment.date, enrolment.progress, course.id, course.title
                 FROM enrolment
@@ -133,6 +143,58 @@ class Course {
 
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $rows;
+      }
+
+    /**
+     * Return a user's progress in a specific course
+     *
+     * @param $conn Database connection
+     *
+     * @param $user_id User's ID
+     *
+     * @param $course_id The course ID
+     *
+     * @return Array An array containing, amongst others, the progress a user has made in a specific course
+     */
+
+      public static function getProgress($conn, $user_id, $course_id) {
+        $sql = 'SELECT *
+                FROM enrolment
+                WHERE user_id = :user_id
+                AND course_id = :course_id;';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':course_id', $course_id, PDO::PARAM_INT);
+
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row;
+      }
+
+     /**
+     * Return all videos of a specific course
+     *
+     * @param $conn Database connection
+     *
+     * @param $course_id The course ID
+     *
+     * @return Array An array containing all of the videos tied to a specific course
+     */
+
+      public static function getAllVideos($conn, $course_id) {
+        $sql = 'SELECT *
+                FROM video
+                WHERE course_id = :course_id;';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':course_id', $course_id, PDO::PARAM_INT);
 
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
