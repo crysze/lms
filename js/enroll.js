@@ -33,5 +33,10 @@ $button.addEventListener("click", (event) => {
 
   $button.innerHTML = 'Processing...';
   }
-});
 
+  // After the enrolment is completed, the button displays "Enter" and redirects the user to the course
+
+  if ($button.innerHTML === "Enter") {
+  window.location.href = `course-items.php?id=${course_id}`;
+  }
+});
