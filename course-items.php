@@ -13,12 +13,11 @@ $course = Course::getByID($conn, $_GET['id']);
 
 $enrolment = Course::getProgress($conn, $_SESSION['user_id'], $_GET['id']);
 
-// Multiple the number from the database (with two decimal places) with 100
+// Multiply the number from the database (with two decimal places) with 100
 
 $progress = $enrolment['progress'] * 100;
 
 $videos = Course::getAllVideos($conn, $_GET['id']);
-
 
 ?>
 <!DOCTYPE html>
@@ -47,15 +46,16 @@ $videos = Course::getAllVideos($conn, $_GET['id']);
         </div>
         <div id="course-items-ctn">
           <?php
-          $i = 1;
-          foreach ($videos as $video) { ?>
-          <div class="course-item">
+          $i = 0;
+          foreach ($videos as $video) {
+          $i++; ?>
+          <div class="course-item video">
             <i class="fas fa-play"></i>
-            <span class="course-item-title"><?= $i++ . ". " . htmlspecialchars($video['title']) ?></span>
+            <span class="course-item-title"><?= $i . ". " . htmlspecialchars($video['title']) ?></span>
           </div>
           <?php } ?>
           <a href="course-items-quiz.html">
-            <div class="course-item">
+            <div class="course-item quiz">
               <i class="fas fa-question-circle"></i>
               <span class="course-item-title"><?= $i++ . "."?> Quiz</span>
             </div>
@@ -70,8 +70,22 @@ $videos = Course::getAllVideos($conn, $_GET['id']);
           </div>
         </a>
         <div id="video-ctn">
-          <span id="video-content"><span id="video-order"><?= htmlspecialchars($videos[0]['hierarchy']); ?></span>. <span id="video-title"><?= htmlspecialchars($videos[0]['title']); ?></span></span>
-          <iframe width="560" height="315" src="<?= htmlspecialchars($videos[0]['url']); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <?php
+        $i = 0;
+        foreach ($videos as $video) {
+          $i++; ?>
+            <div class="video-sub-ctn" <?php if ($i > 1) { echo "hidden"; } ?>>
+              <span id="video-content">
+                <span id="video-order">
+                  <?= htmlspecialchars($video['hierarchy']); ?>
+                </span>.
+                <span id="video-title">
+                  <?= htmlspecialchars($video['title']); ?>
+                </span>
+              </span>
+              <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($video['yt_id']); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          <?php } ?>
           <div id="video-nav-ctn">
             <a href="#">
               <div id="previous-ctn">
