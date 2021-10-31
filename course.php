@@ -32,7 +32,7 @@ $course = Course::getByID($conn, $_GET['id']);
     </header>
     <main>
       <div id="course-desc-ctn">
-        <img id="course-img" src="<?= htmlspecialchars($course->img) ?>">
+        <img id="course-img" src="<?= htmlspecialchars($course->path) ?>">
         <h1><?= htmlspecialchars($course->title) ?></h1>
         <span id="course-desc-txt">
           <?= htmlspecialchars($course->description) ?>
