@@ -28,11 +28,11 @@ class Course {
     public $title;
 
     /**
-     * The course image
+     * The path to the course image
      *
      * @var string
      */
-    public $img;
+    public $path;
 
     /**
      * The course description
@@ -51,8 +51,9 @@ class Course {
      * @return mixed An object of this class, or null if not found
      */
     public static function getByID($conn, $id, $columns = '*') {
-        $sql = "SELECT $columns
+        $sql = "SELECT $columns, image.img_id, image.path
                 FROM course
+                INNER JOIN image ON image.img_id = course.img
                 WHERE id = :id";
 
         $stmt = $conn->prepare($sql);
