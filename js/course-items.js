@@ -29,11 +29,16 @@ if ($videoHierarchy.innerHTML === "1") {
    $previous.remove();
 }
 
+// Register the navigation item for the quiz, the 'previous' and 'next' options in bulk and the "Complete item" button
+
+const $quizNav = document.querySelector('.quiz');
+const $videoNav = document.querySelector('#video-nav-ctn');
+const $completeBtn = document.querySelector('#item-completion-ctn');
 
 // Register the navigation items and the videos
 
-const $navigation = Array.from(document.querySelectorAll('.course-item.video'));
-const $video = Array.from(document.querySelectorAll('.video-sub-ctn'));
+const $navigation = Array.from(document.querySelectorAll('.course-item'));
+const $content = Array.from(document.querySelectorAll('.content-sub-ctn'));
 
 // Variable that will be used in the loop to store the index of the newly selected tab
 
@@ -42,6 +47,7 @@ let selectedVideo = 0;
 // Assign a click event to all navigation items
 
 for (const INDEX in $navigation) {
+
   $navigation[INDEX].addEventListener('click', () => {
 
     // Make the currently selected item non-clickable
@@ -53,17 +59,28 @@ for (const INDEX in $navigation) {
     // On click, the previously selected item will lose its highlight and will be hidden
 
     $navigation[selectedVideo].classList.remove('active');
-    $video[selectedVideo].hidden = true;
+    $content[selectedVideo].hidden = true;
 
     // The newly selected item will be highlighted and not be hidden anymore
 
     $navigation[INDEX].classList.add('active');
-    $video[INDEX].hidden = false;
+    $content[INDEX].hidden = false;
 
-    // Store the number of the newly selected item for the next loop
+   // Store the number of the newly selected item for the next loop
 
     selectedVideo = INDEX;
+
+   // Hide the 'next' and 'previous' option and the completion button if the quiz is selected and show it again if it's not selected
+
+   if ($quizNav.classList.contains('active')) {
+      $videoNav.style.display = 'none';
+      $completeBtn.style.display = 'none';
+    } else {
+      $videoNav.style.display = 'flex';
+      $completeBtn.style.display = 'flex';
+    }
   });
+
 }
 
 

@@ -19,6 +19,9 @@ $progress = $enrolment['progress'] * 100;
 
 $videos = Course::getAllVideos($conn, $_GET['id']);
 
+$question = Course::getQuizQuestion($conn, $_GET['id']);
+$answers = Course::getQuizAnswers($conn, $_GET['id']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,12 +57,10 @@ $videos = Course::getAllVideos($conn, $_GET['id']);
             <span class="course-item-title"><?= $i . ". " . htmlspecialchars($video['title']) ?></span>
           </div>
           <?php } ?>
-          <a href="course-items-quiz.html">
-            <div class="course-item quiz">
-              <i class="fas fa-question-circle"></i>
-              <span class="course-item-title"><?= $i++ . "."?> Quiz</span>
-            </div>
-          </a>
+          <div class="course-item quiz">
+            <i class="fas fa-question-circle"></i>
+            <span class="course-item-title" hierarchy="<?= htmlspecialchars(++$i); ?>"><?= $i . "."?> Quiz</span>
+          </div>
         </div>
       </div>
       <div id="content">
@@ -74,7 +75,7 @@ $videos = Course::getAllVideos($conn, $_GET['id']);
         $i = 0;
         foreach ($videos as $video) {
           $i++; ?>
-            <div class="video-sub-ctn" <?php if ($i > 1) { echo "hidden"; } ?>>
+            <div class="content-sub-ctn" <?php if ($i > 1) { echo "hidden"; } ?>>
               <span id="video-content">
                 <span id="video-order">
                   <?= htmlspecialchars($video['hierarchy']); ?>
@@ -102,6 +103,27 @@ $videos = Course::getAllVideos($conn, $_GET['id']);
           </div>
           <div id="item-completion-ctn">
             <button class="btn-red"><a href="logout.php">Complete Item</a></button>
+          </div>
+        </div>
+        <div class="content-sub-ctn" hidden>
+          <div id="quiz-ctn">
+            <div id="quiz-hdg">
+              <span id="quiz-content">3. Quiz</span>
+              <span id="quiz-qu-nr">Question <span class="quiz-qu-nr-hi">1</span> of <span class="quiz-qu-nr-hi">1</span></span>
+            </div>
+            <div id="quiz">
+              <span id="quiz-question"><?= htmlspecialchars($question); ?></span>
+              <?php foreach ($answers as $answer) { ?>
+                <div class="question-item">
+                  <br>
+                  <input type="checkbox" class="qu-checkbox" id="<?= htmlspecialchars($answer['choice']); ?>"><label for="<?= htmlspecialchars($answer['choice']); ?>"><?= htmlspecialchars($answer['choice']); ?>) <?= htmlspecialchars($answer['text']); ?></label>
+                  <br>
+                </div>
+              <?php } ?>
+            </div>
+            <div id="btn-ctn">
+              <button id="question-complete-btn">Submit Answer</button>
+            </div>
           </div>
         </div>
       </div>
