@@ -76,8 +76,9 @@ main {
   background-color: white;
 }
 
-.course-item:hover {
+.course-item:hover:not(.active) {
   background-color: var(--grey-light-global);
+  cursor: pointer;
 }
 
 .course-item.active {
