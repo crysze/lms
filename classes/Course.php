@@ -202,4 +202,52 @@ class Course {
 
         return $rows;
       }
+
+    /**
+     * Return the quiz question of a specific course
+     *
+     * @param $conn Database connection
+     *
+     * @param $course_id The course ID
+     *
+     * @return String A string containing the question
+     */
+
+    public static function getQuizQuestion($conn, $course_id) {
+      $sql = 'SELECT text
+              FROM question
+              WHERE course_id = :course_id;';
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':course_id', $course_id, PDO::PARAM_INT);
+
+      $stmt->execute();
+      $result = $stmt->fetchColumn();
+
+      return $result;
+    }
+
+    /**
+     * Return the quiz answers of a specific course
+     *
+     * @param $conn Database connection
+     *
+     * @param $course_id The course ID
+     *
+     * @return Array An array containing all of the answers tied to a specific question
+     */
+
+    public static function getQuizAnswers($conn, $course_id) {
+      $sql = 'SELECT *
+              FROM answer
+              WHERE question_id = :course_id;';
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':course_id', $course_id, PDO::PARAM_INT);
+
+      $stmt->execute();
+      $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      return $rows;
+    }
 }
