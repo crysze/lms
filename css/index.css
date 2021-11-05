@@ -152,6 +152,14 @@ h2 {
 .widget-ctn {
   display: inline-flex;
   justify-content: space-between;
+  overflow-x: hidden;
+  width: 74rem;
+}
+
+.widget-sub-ctn {
+  display: inline-flex;
+  justify-content: space-between;
+  transition: all 300ms;
 }
 
 .widget:hover .widget-logo {
