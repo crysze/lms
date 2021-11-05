@@ -1,4 +1,15 @@
-<?php session_start(); ?>
+<?php session_start();
+require 'classes/Database.php';
+require 'classes/Course.php';
+
+$db = new Database();
+$conn = $db->getConn();
+
+$PHPCourses = Course::getByCategory($conn, 'PHP / MySQL');
+$JSCourses = Course::getByCategory($conn, 'JavaScript');
+
+?>
+
 <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -7,6 +18,7 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/reset.css">
     <script src="https://kit.fontawesome.com/5782589434.js" crossorigin="anonymous"></script>
+    <script src="js/index.js" defer></script>
     <title>Code Loop</title>
   </head>
   <body>
@@ -27,73 +39,41 @@
       <div class="slider">
         <i class="fas fa-caret-left fa-5x"></i>
         <div class="widget-ctn">
-          <a href="course.php?id=1">
-            <div class="widget">
-              <div class="widget-logo">
-                <img class="php-img" src="img/php.png">
-              </div>
-              <div class="widget-title">
-                PHP Fundamentals
-              </div>
+          <div class="widget-sub-ctn">
+            <?php foreach ($PHPCourses as $PHPCourse) { ?>
+              <a href="course.php?id=<?= htmlspecialchars($PHPCourse['id']); ?>">
+                <div class="widget">
+                  <div class="widget-logo">
+                    <img class="php-img" src="<?= htmlspecialchars($PHPCourse['path']); ?>">
+                  </div>
+                  <div class="widget-title">
+                    <?= htmlspecialchars($PHPCourse['title']); ?>
+                  </div>
+                </div>
+              </a>
+            <?php } ?>
             </div>
-          </a>
-        <a href="course.php?id=2">
-          <div class="widget">
-            <div class="widget-logo">
-              <img class="php-img" src="img/php.png">
-            </div>
-            <div class="widget-title">
-              PHP OOP
-            </div>
-          </div>
-        </a>
-        <a href="course.php?id=3">
-          <div class="widget">
-            <div class="widget-logo">
-              <img class="mysql-img" src="img/mysql.svg">
-            </div>
-            <div class="widget-title">
-              MySQL Fundamentals
-            </div>
-          </div>
-        </a>
-      </div>
+        </div>
         <i class="fas fa-caret-right fa-5x"></i>
       </div>
       <h2>JavaScript</h2>
       <div class="slider">
         <i class="fas fa-caret-left fa-5x"></i>
         <div class="widget-ctn">
-          <a href="course.php?id=4">
-            <div class="widget">
-              <div class="widget-logo">
-                <img class="js-img" src="img/js.png">
-              </div>
-              <div class="widget-title">
-                JS Fundamentals
-              </div>
+        <div class="widget-sub-ctn">
+            <?php foreach ($JSCourses as $JSCourse) { ?>
+              <a href="course.php?id=<?= htmlspecialchars($JSCourse['id']); ?>">
+                <div class="widget">
+                  <div class="widget-logo">
+                    <img class="php-img" src="<?= htmlspecialchars($JSCourse['path']); ?>">
+                  </div>
+                  <div class="widget-title">
+                    <?= htmlspecialchars($JSCourse['title']); ?>
+                  </div>
+                </div>
+              </a>
+            <?php } ?>
             </div>
-          </a>
-          <a href="course.php?id=5">
-            <div class="widget">
-              <div class="widget-logo">
-                <img class="js-img" src="img/js.png">
-              </div>
-              <div class="widget-title">
-                JS OOP
-              </div>
-            </div>
-          </a>
-          <a href="course.php?id=6">
-            <div class="widget">
-              <div class="widget-logo">
-                <img class="njs-img" src="img/node_js.png">
-              </div>
-              <div class="widget-title">
-                Node JS
-              </div>
-            </div>
-          </a>
         </div>
         <i class="fas fa-caret-right fa-5x"></i>
       </div>

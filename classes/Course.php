@@ -41,7 +41,7 @@ class Course {
      */
     public $description;
 
-      /**
+    /**
      * Get the course record based on the course ID.
      *
      * @param object $conn    Connection to the database
@@ -65,6 +65,31 @@ class Course {
             return $stmt->fetch();
         }
     }
+
+    /**
+     * Get the course record based on the course category.
+     *
+     * @param object $conn    Connection to the database
+     * @param int    $id      the course ID
+     * @param string $columns Optional list of columns for the select, defaults to *
+     *
+     * @return mixed An object of this class, or null if not found
+     */
+    public static function getByCategory($conn, $category) {
+      $sql = "SELECT course.id, course.title, course.category, course.img, category.category_id, category.category_title, image.img_id, image.path
+              FROM course
+              INNER JOIN category ON category.category_id = course.category
+              INNER JOIN image ON image.img_id = course.img
+              WHERE category.category_title = :category";
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':category', $category, PDO::PARAM_STR);
+
+      $stmt->execute();
+      $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      return $rows;
+  }
 
     /**
      * Creates a new enrolment in the database
