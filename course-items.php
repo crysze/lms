@@ -15,7 +15,7 @@ $enrolment = Course::getProgress($conn, $_SESSION['user_id'], $_GET['id']);
 
 // Multiply the number from the database (with two decimal places) with 100
 
-$progress = $enrolment['progress'] * 100;
+$progress = (int)$enrolment['progress'];
 
 $videos = Course::getAllVideos($conn, $_GET['id']);
 
@@ -32,6 +32,7 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
     <link rel="stylesheet" href="css/course-items.css">
     <script src="https://kit.fontawesome.com/5782589434.js" crossorigin="anonymous"></script>
     <script src="js/course-items.js" defer></script>
+    <script src="js/completion.js" defer></script>
     <title><?= htmlspecialchars($course->title); ?></title>
   </head>
   <body>
@@ -42,7 +43,7 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
           <span id="course-title"><?= htmlspecialchars($course->title); ?></span>
         </div>
         <div id="course-completion-ctn">
-          <span id="course-completion">Course completion: <span id="course-completion-pc"><?= htmlspecialchars($progress) . "%"; ?></span></span>
+          <span id="course-completion" progress="<?= htmlspecialchars($progress); ?>">Course completion: <span id="course-completion-pc"><?= htmlspecialchars($progress) . "%"; ?></span></span>
           <div id="progress-bar">
             <div id="progress-bar-filled" progress="<?= /* Assign the progress to a new custom HTML attribute for usage in course-items.js */ htmlspecialchars($progress); ?>"></div>
           </div>
@@ -52,9 +53,12 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
           $i = 0;
           foreach ($videos as $video) {
           $i++; ?>
-          <div class="course-item video">
+          <div class="course-item video" hierarchy="<?= $i; ?>">
             <i class="fas fa-play"></i>
             <span class="course-item-title"><?= $i . ". " . htmlspecialchars($video['title']) ?></span>
+            <?php if ($complete = Course::getCompletion($conn, $_GET['id'], $_SESSION['user_id'], $i)) {
+              echo '<i class="fas fa-check-circle"></i>';
+            } ?>
           </div>
           <?php } ?>
           <div class="course-item quiz">
@@ -85,9 +89,13 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
                 </span>
               </span>
               <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($video['yt_id']); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <div id="item-completion-ctn">
+                <button class="btn-red <?php if ($complete = Course::getCompletion($conn, $_GET['id'], $_SESSION['user_id'], $i)) {
+                  echo 'completed'; } ?>" hierarchy="<?= $i;?>"><?php if ($complete) { echo 'Completed'; } else { echo 'Complete Item'; } ?></button>
+              </div>
             </div>
           <?php } ?>
-          <div id="video-nav-ctn">
+<!--           <div id="video-nav-ctn">
             <a href="#">
               <div id="previous-ctn">
                 <i class="fas fa-chevron-left fa-2x"></i>
@@ -100,10 +108,7 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
                 <i class="fas fa-chevron-right fa-2x"></i>
               </div>
             </a>
-          </div>
-          <div id="item-completion-ctn">
-            <button class="btn-red"><a href="logout.php">Complete Item</a></button>
-          </div>
+          </div> -->
         </div>
         <div class="content-sub-ctn" hidden>
           <div id="quiz-ctn">

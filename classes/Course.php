@@ -204,6 +204,100 @@ class Course {
         return $row;
       }
 
+    /**
+     * Update a user's course progress in a specific course
+     *
+     * @param $conn Database connection
+     *
+     * @param $user_id User's ID
+     *
+     * @param $course_id The course ID
+     *
+     * @param $new_progress The progress to be updated
+     *
+     * @return Bool Returns true if the update was successful
+     */
+
+    public static function updateProgress($conn, $user_id, $course_id, $new_progress) {
+      $sql = 'UPDATE enrolment
+              SET progress = :new_progress
+              WHERE user_id = :user_id
+              AND course_id = :course_id;';
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+      $stmt->bindValue(':course_id', $course_id, PDO::PARAM_INT);
+      $stmt->bindValue(':new_progress', $new_progress, PDO::PARAM_INT);
+
+      if ($stmt->execute()) {
+        return true;
+        }
+    }
+
+    /**
+     * Create a database entry for the completion of a specific course item
+     *
+     * @param $conn Database connection
+     *
+     * @param $user_id User's ID
+     *
+     * @param $course_id The course ID
+     *
+     * @param $item_id The ID of the item within the course
+     *
+     * @return Bool Returns true if the insertion was successful
+     */
+
+    public static function setCompletion($conn, $user_id, $course_id, $item_id) {
+      $sql = 'INSERT INTO completion (course_id, user_id, item_id)
+              VALUES (:course_id, :user_id, :item_id);';
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':course_id', $course_id, PDO::PARAM_INT);
+      $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+      $stmt->bindValue(':item_id', $item_id, PDO::PARAM_INT);
+
+      if ($stmt->execute()) {
+        return true;
+        }
+    }
+
+    /**
+     * Check if a specific course item has already been completed
+     *
+     * @param $conn Database connection
+     *
+     * @param $user_id User's ID
+     *
+     * @param $course_id The course ID
+     *
+     * @param $item_id The ID of the item within the course
+     *
+     * @return Bool Returns true if the course item was already completed
+     */
+
+    public static function getCompletion($conn, $course_id, $user_id, $item_id) {
+      $sql = 'SELECT *
+      FROM completion
+      WHERE course_id = :course_id
+      AND user_id = :user_id
+      AND item_id = :item_id;';
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':course_id', $course_id, PDO::PARAM_INT);
+      $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+      $stmt->bindValue(':item_id', $item_id, PDO::PARAM_INT);
+
+      $stmt->execute();
+      $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      if ($row) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
      /**
      * Return all videos of a specific course
      *

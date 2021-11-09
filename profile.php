@@ -57,7 +57,7 @@ $enrolmentCount = count($enrolments, COUNT_NORMAL);
           <tr>
             <td><a href="./course.php?id=<?= $enrolment['id'] ?>"><?= $enrolment['title']; ?></a></td>
             <td><?= $enrolment['date']; ?></td>
-            <td><?= ($enrolment['progress'] * 100); ?>%</td>
+            <td><?= (int)$enrolment['progress']; ?>%</td>
           </tr>
         <?php } ?>
       </table>

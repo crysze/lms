@@ -91,6 +91,11 @@ main {
   margin-right: 1rem;
 }
 
+.fas.fa-check-circle {
+  float: right;
+  margin-right: 2rem;
+}
+
 #go-back-ctn {
   display: flex;
   justify-content: flex-end;
@@ -185,6 +190,10 @@ main {
   display: flex;
   margin-top: 3rem;
   justify-content: center;
+}
+
+.btn-red.completed {
+  background-color: green;
 }
 
 iframe {
