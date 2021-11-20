@@ -6,6 +6,39 @@ main {
   display: flex;
 }
 
+#overlay {
+  z-index: 999;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#message-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40rem;
+  height: 15rem;
+  background-color: var(--font-red);
+  border-radius: 0.55rem;
+  border: 0.1rem solid black;
+}
+
+#quiz-msg {
+  margin-bottom: 1rem;
+  color: white;
+}
+
+#quiz-continue {
+  background-color: var(--grey-light-global);
+}
+
 #nav-left {
   width: 25%;
   height: 100vh;
@@ -171,7 +204,7 @@ main {
   margin: 0.5rem 0.5rem 0 0;
 }
 
-#question-complete-btn {
+.question-complete-btn {
   padding: 0.25rem 0;
   width: 30%;
   margin: 0.30rem 0;
@@ -182,7 +215,7 @@ main {
   background-color: var(--font-red);
 }
 
-#question-complete-btn:hover {
+.question-complete-btn:hover {
   background-color: black;
 }
 
@@ -192,7 +225,7 @@ main {
   justify-content: center;
 }
 
-.btn-red.completed {
+.completed {
   background-color: green;
 }
 

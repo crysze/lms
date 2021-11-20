@@ -33,6 +33,7 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
     <script src="https://kit.fontawesome.com/5782589434.js" crossorigin="anonymous"></script>
     <script src="js/course-items.js" defer></script>
     <script src="js/completion.js" defer></script>
+    <script src="js/completion-quiz.js" defer></script>
     <title><?= htmlspecialchars($course->title); ?></title>
   </head>
   <body>
@@ -61,9 +62,12 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
             } ?>
           </div>
           <?php } ?>
-          <div class="course-item quiz">
+          <div class="course-item quiz" hierarchy="<?= htmlspecialchars(++$i); ?>">
             <i class="fas fa-question-circle"></i>
-            <span class="course-item-title" hierarchy="<?= htmlspecialchars(++$i); ?>"><?= $i . "."?> Quiz</span>
+            <span class="course-item-title" hierarchy="<?= htmlspecialchars($i); ?>"><?= $i . "."?> Quiz</span>
+            <?php if ($complete = Course::getCompletion($conn, $_GET['id'], $_SESSION['user_id'], $i)) {
+              echo '<i class="fas fa-check-circle"></i>';
+            } ?>
           </div>
         </div>
       </div>
@@ -95,7 +99,7 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
               </div>
             </div>
           <?php } ?>
-<!--           <div id="video-nav-ctn">
+          <!-- <div id="video-nav-ctn">
             <a href="#">
               <div id="previous-ctn">
                 <i class="fas fa-chevron-left fa-2x"></i>
@@ -112,28 +116,32 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
         </div>
         <div class="content-sub-ctn" hidden>
           <div id="quiz-ctn">
-            <div id="quiz-hdg">
+            <!-- <div id="quiz-hdg">
               <span id="quiz-content">3. Quiz</span>
               <span id="quiz-qu-nr">Question <span class="quiz-qu-nr-hi">1</span> of <span class="quiz-qu-nr-hi">1</span></span>
-            </div>
+            </div> -->
             <div id="quiz">
               <span id="quiz-question"><?= htmlspecialchars($question); ?></span>
               <?php foreach ($answers as $answer) { ?>
                 <div class="question-item">
                   <br>
-                  <input type="checkbox" class="qu-checkbox" id="<?= htmlspecialchars($answer['choice']); ?>"><label for="<?= htmlspecialchars($answer['choice']); ?>"><?= htmlspecialchars($answer['choice']); ?>) <?= htmlspecialchars($answer['text']); ?></label>
+                  <input type="radio" name="selection" class="qu-checkbox" value="<?= htmlspecialchars($answer['id']); ?>"><label for="<?= htmlspecialchars($answer['choice']); ?>" value="<?= htmlspecialchars($answer['id']); ?>"><?= htmlspecialchars($answer['choice']); ?>) <?= htmlspecialchars($answer['text']); ?></label>
                   <br>
                 </div>
               <?php } ?>
             </div>
             <div id="btn-ctn">
-              <button id="question-complete-btn">Submit Answer</button>
+              <button class="question-complete-btn <?php if ($complete = Course::getCompletion($conn, $_GET['id'], $_SESSION['user_id'], ++$i)) {
+                  echo 'completed'; } ?>" hierarchy="<?= $i;?>"><?php if ($complete) { echo 'Completed'; } else { echo 'Submit Answer'; } ?></button>
             </div>
           </div>
         </div>
       </div>
     </main>
-
-
+    <div id="overlay" hidden>
+      <div id="message-box">
+        <span id="quiz-msg"></span>
+        <button id="quiz-continue">Continue</button>
+    </div>
   </body>
 </html>

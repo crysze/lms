@@ -224,6 +224,8 @@ class Course {
               WHERE user_id = :user_id
               AND course_id = :course_id;';
 
+      if ($new_progress === 99) $new_progress = 100;
+
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
       $stmt->bindValue(':course_id', $course_id, PDO::PARAM_INT);
@@ -368,5 +370,29 @@ class Course {
       $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       return $rows;
+    }
+
+     /**
+     * Return the quiz answers of a specific course
+     *
+     * @param $conn Database connection
+     *
+     * @param $question_id The global question ID
+     *
+     * @return Bool Returns true if the user's answer is the correct answer, false if it isn't
+     */
+
+    public static function validateAnswer($conn, $answer_id) {
+      $sql = 'SELECT *
+              FROM answer
+              WHERE id = :answer_id;';
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':answer_id', $answer_id, PDO::PARAM_INT);
+
+      $stmt->execute();
+      $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      return $row[0]['correct'] === "1" ? true : false;
     }
 }

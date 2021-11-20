@@ -42,9 +42,9 @@ $enrolmentCount = count($enrolments, COUNT_NORMAL);
         <br>
         <span id="username"><?= $_SESSION['username']; ?></span>
         <hr id="hr-sidebar">
-        <span id="courses">Courses</span>
-        <button class="btn-active">In Progress</button>
-        <button class="btn-inactive">Completed</button>
+        <!-- <span id="courses">Courses</span> -->
+        <!-- <button class="btn-active">In Progress</button>
+        <button class="btn-inactive">Completed</button> -->
         <button class="btn-red"><a href="logout.php">Logout</a></button>
       </div>
     </div>
