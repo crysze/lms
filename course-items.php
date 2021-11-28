@@ -1,4 +1,14 @@
-<?php session_start();
+<?php
+
+session_start();
+
+// Redirect the user to index.php if they are already logged in
+
+if (!$_SESSION['is_logged_in']) {
+  header("Location: index.php", TRUE, 301);
+  exit();
+}
+
 require 'classes/Database.php';
 require 'classes/Course.php';
 

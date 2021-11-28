@@ -1,5 +1,12 @@
 'use strict';
 
+// Get the course ID if it's been carried over to redirect the user to the course they wanted to view before logging in
+
+const urlString = window.location.href;
+const Url = new URL(urlString);
+const course_id = Url.searchParams.get("id");
+console.log(course_id);
+
 const FORM = document.querySelector('form');
 
 // Add an event listener to the form that is triggered by clicking the submit button
@@ -85,7 +92,7 @@ FORM.addEventListener("submit", (event) => {
         // Redirect the user to index.php after 3 seconds
 
         setTimeout(() => {
-          window.location.href= 'index.php';
+            course_id ? window.location.href = `course.php?id=${course_id}` : window.location.href = 'index.php';
           }, 3000);
       }
     }

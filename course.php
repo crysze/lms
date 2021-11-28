@@ -47,7 +47,7 @@ $course = Course::getByID($conn, $_GET['id']);
            } else {
                 echo "<span id='login-prompt'>
                   <i class='fas fa-exclamation-circle fa-2x'></i>
-                  Please <a href='user-login.php'><span id='login-link'>log in</span></a> to enroll in this course
+                  Please <a href='user-login.php?id={$_GET['id']}'><span id='login-link'>log in</span></a> to enroll in this course
                 </span>";
             } ?>
       </div>

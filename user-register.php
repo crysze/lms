@@ -1,3 +1,16 @@
+<?php
+
+session_start();
+
+// Redirect the user to index.php if they are already logged in
+
+if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in']) {
+  header("Location: index.php", TRUE, 301);
+  exit();
+}
+
+?>
+
 <!DOCTYPE html>
   <html lang="en">
   <head>
