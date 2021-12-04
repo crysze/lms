@@ -2,8 +2,10 @@
 if (isset($_SESSION['username'])) {
   echo "
   <div class='dropdown'>
-    <i class='fas fa-user'></i>
-    <span class='header-item-dropdown'><a href='profile.php'>{$_SESSION['username']}</a></span>
+    <a class='header-link' href='profile.php'>
+      <i class='fas fa-user'></i>
+      <span class='header-item-dropdown'>{$_SESSION['username']}</span>
+    </a>
     <div class='dropdown-content'>
       <a href='profile.php'>User Profile</a>
       <hr id='hr-dropdown'>
@@ -13,10 +15,12 @@ if (isset($_SESSION['username'])) {
   ";
   } else {
     echo "
-    <div id='header'>
-      <i class='fas fa-user'></i>
-      <span class='header-item'><a href='user-login.php'>Login / Register</a></span>
-    </div>
+      <div id='header'>
+        <a class='header-link' href='user-login.php'>
+          <i class='fas fa-user'></i>
+          <span class='header-item'>Login / Register</span>
+        </a>
+      </div>
     ";
 }
 ?>

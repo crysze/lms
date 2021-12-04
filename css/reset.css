@@ -13,11 +13,13 @@ html {
   overflow-x: hidden;
   font-size: 62.5%;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --background-global: #F9F0F0;
+  --background-global: #f2e6f2;
+  --background-nav: #5a005a;
   --font-red: #990000;
   --grey-global: #B8B8B8;
   --grey-light-global: #E3E3E3;
   --grey-dark: #303030;
+  --purple-light: #f2e6f2;
 
 }
 
@@ -53,7 +55,7 @@ button {
   background-color: var(--grey-global);
 }
 
-.btn-red:hover {
+.btn-red:hover:not(.completed) {
   background-color: black;
 }
 
@@ -62,5 +64,34 @@ button {
   background-color: var(--font-red);
   color: white;
 }
+
+.loader {
+  display: none;
+  margin: 2rem auto;
+  border: 1rem solid var(--grey-light-global);
+  border-top: 1rem solid var(--font-red);
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.header-link {
+  display: flex;
+}
+
+.header-link i, .header-link span {
+  color: white;
+}
+
+.header-link:hover i, .header-link:hover span {
+  color: var(--grey-global);
+}
+
 
 

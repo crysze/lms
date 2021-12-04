@@ -57,12 +57,12 @@ tr:hover:not(:first-child) {
 }
 
 td {
-  padding: 0.1rem;
+  padding: 1rem;
 }
 
 th {
   padding-bottom: 0.75rem;
-  font-size: 1.75rem;
+  font-size: 2.2rem;
 }
 
 tr :nth-child(1) {
@@ -72,7 +72,7 @@ tr :nth-child(1) {
 
 
 tr:not(:last-child):not(:first-child) {
-  border-bottom: 0.1rem solid var(--grey-global);
+  border-bottom: 0.1rem solid var(--background-nav);
 }
 
 
@@ -80,6 +80,7 @@ tr:not(:last-child):not(:first-child) {
   font-size: 1.5rem;
   padding-left: 1.5rem;
   color: var(--grey-dark);
+  font-weight: 700;
 }
 
 
@@ -87,5 +88,41 @@ tr:not(:last-child):not(:first-child) {
   font-size: 1.5rem;
   font-weight: 700;
   color: black;
+}
+
+.btn-red.profile {
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 770px) {
+
+  main {
+    padding: 0;
+    flex-direction: column;
+  }
+
+  #sidebar-left {
+    padding: 5rem 0 0 0;
+    height: auto;
+    padding-bottom: 5rem;
+    width: 100vw;
+    border-right: none;
+  }
+
+  #table {
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  table {
+    width: 80vw;
+  }
+
+  th {
+    font-size: 1.75rem;
+  }
 }
 

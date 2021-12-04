@@ -30,8 +30,10 @@ $enrolmentCount = count($enrolments, COUNT_NORMAL);
 <body>
   <header>
     <div id="header">
-      <i class="fas fa-home"></i>
-      <span class="header-item"><a href="index.php">Home</a></span>
+      <a class="header-link" href="index.php">
+        <i class="fas fa-home"></i>
+        <span class="header-item">Home</span>
+      </a>
     </div>
     <hr>
   </header>
@@ -45,7 +47,7 @@ $enrolmentCount = count($enrolments, COUNT_NORMAL);
         <!-- <span id="courses">Courses</span> -->
         <!-- <button class="btn-active">In Progress</button>
         <button class="btn-inactive">Completed</button> -->
-        <button class="btn-red"><a href="logout.php">Logout</a></button>
+        <button class="btn-red profile"><a href="logout.php">Logout</a></button>
       </div>
     </div>
     <div id="table">

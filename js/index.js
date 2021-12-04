@@ -7,6 +7,12 @@ const arrowRight = Array.from(document.querySelectorAll('.fa-caret-right'));
 
 const sliderCtn = Array.from(document.querySelectorAll('.widget-sub-ctn'));
 
+let noOfCourses = 0;
+
+if (screen.width > 848) noOfCourses = 3;
+if (screen.width <= 848 && screen.width > 598) noOfCourses = 2;
+if (screen.width <= 678) noOfCourses = 1;
+
 // Slider functionality when clicking on the arrows
 
 for (let i = 0; i < sliderCtn.length; i++) {
@@ -36,7 +42,7 @@ for (let i = 0; i < sliderCtn.length; i++) {
     // 3 is the default number of courses that are displayed at any time in the slider - therefore, the total amount of courses in that category is counted, three is subtracted and the result is multiplied with the widgetWith (currently 24.7rem)
 
     const allCourses = sliderCtn[i].querySelectorAll('.widget');
-    const sliderEndNumber = (allCourses.length - 3) * widgetWidth;
+    const sliderEndNumber = (allCourses.length - noOfCourses) * widgetWidth;
 
     // If the transform property has a translateX value that was calculated before, there are no more courses to "scroll" and therefore the right arrow is hidden - otherwise it's visible
 

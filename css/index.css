@@ -15,7 +15,7 @@ header {
 #header {
   display: flex;
   justify-content: center;
-  background-color: white;
+  background-color: var(--background-nav);
 }
 
 #header-ctn {
@@ -26,19 +26,15 @@ header {
 
 .header-item {
   margin: 2rem 2rem 2rem 1rem;
-  color: var(--font-red);
+  color: white;
   font-weight: 600;
 }
 
 .header-item-dropdown {
   margin: 0 0 0 1rem;
   top: 2rem;
-  color: var(--font-red);
+  color: white;
   font-weight: 600;
-}
-
-.header-item:hover {
-  color: black;
 }
 
 .dropdown {
@@ -138,6 +134,7 @@ main {
 
 .fas.fa-caret-left:hover, .fas.fa-caret-right:hover {
   color: black;
+  cursor: pointer;
 }
 
 h2 {
@@ -185,7 +182,7 @@ h2 {
 .widget-logo {
   flex-grow: 2.5;
   background-color:white;
-  border-radius: 1rem;
+  border-radius: 1rem 1rem 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -196,7 +193,7 @@ h2 {
   background-color:blue;
   border-top: 0.1rem solid black;
   border-radius: 0 0 1rem 1rem;
-  background:linear-gradient(#FFFFFF 0%, #B8B8B8 100%);
+  background: linear-gradient(#FFFFFF 0%, #B8B8B8 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -238,4 +235,37 @@ h3:hover {
 
 #logo img {
   height: 15rem;
+}
+
+@media screen and (max-width: 848px) {
+  .widget-ctn {
+    width: 49rem;
+  }
+
+  main {
+    padding-left: 8rem;
+  }
+}
+
+@media screen and (max-width: 678px) {
+  .widget-ctn {
+    width: 24rem;
+  }
+}
+
+@media screen and (max-width: 429px) {
+  .widget-ctn {
+    width: 24rem;
+  }
+
+  main {
+    padding-left: 1rem;
+  }
+}
+
+@media screen and (max-width: 358px) {
+  .fas.fa-caret-right, .fas.fa-caret-left {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

@@ -18,9 +18,12 @@ Auth::logout();
     <header>
       <div id="header">
         <div id='header'>
-          <i class='fas fa-user'></i>
-          <span class='header-item'><a href='user-login.php'>Login / Register</a></span>
-        </div>
+          <a class="header-link" href='user-login.php'>
+            <i class='fas fa-user'></i>
+            <span class='header-item'>Login / Register</span>
+          </a>
+          </div>
+        </a>
       </div>
       <hr>
     </header>

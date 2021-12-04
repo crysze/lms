@@ -5,9 +5,14 @@
 const urlString = window.location.href;
 const Url = new URL(urlString);
 const course_id = Url.searchParams.get("id");
-console.log(course_id);
+
+// Register the form
 
 const FORM = document.querySelector('form');
+
+// Register the spinner
+
+const $spinner = document.querySelector('.loader');
 
 // Add an event listener to the form that is triggered by clicking the submit button
 
@@ -75,7 +80,8 @@ FORM.addEventListener("submit", (event) => {
   const XHR = new XMLHttpRequest();
   XHR.open('POST', 'login.php', true);
   XHR.onreadystatechange = () => {
-    if (XHR.readyState === 4 && XHR.status === 200) {
+    if (XHR.readyState === 4 && XHR.status >= 200) {
+      console.log(XHR.status);
       const returnData = XHR.responseText;
       $responseCtn.style.display = 'block';
       $responseTxt.innerHTML = returnData;
@@ -83,6 +89,9 @@ FORM.addEventListener("submit", (event) => {
       // Set all input fields as readonly if the registration was successful
 
       if ($responseTxt.innerHTML === "You've logged in successfully. Redirecting...") {
+
+        $spinner.style.visibility = 'visible';
+
         for (let index in inputIDs) {
           document.getElementById(inputIDs[index]).readOnly = true;
           document.getElementById(inputIDs[index]).style.opacity = '0.5';

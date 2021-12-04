@@ -36,7 +36,7 @@ if ($quizButton.innerHTML === 'Completed') {
             const returnData = XHR.responseText;
             console.log(returnData);
             if (returnData.includes('Passed')) {
-                $labels[index].style.background = 'green';
+                $labels[index].style.background = 'lightGreen';
             }
       }
     }
@@ -109,7 +109,7 @@ $quizButton.addEventListener('click', () => {
         // Add a green overlay to the correct answer
 
         const $rightAnswer = document.querySelector(`label[value='${window.selectedValue}']`);
-        $rightAnswer.style.background = 'green';
+        $rightAnswer.style.background = 'lightGreen';
 
         // Disable all radio buttons after the quiz has been passed
 

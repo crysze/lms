@@ -82,12 +82,12 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
         </div>
       </div>
       <div id="content">
-        <a href="index.php">
           <div id="go-back-ctn">
-            <span id="go-back-txt">Go back</span>
-            <i class="fas fa-times fa-2x"></i>
+            <a class="header-link" href="index.php">
+              <span id="go-back-txt">Go back</span>
+              <i class="fas fa-times fa-2x"></i>
+            </a>
           </div>
-        </a>
         <div id="video-ctn">
         <?php
         $i = 0;
@@ -102,7 +102,9 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
                   <?= htmlspecialchars($video['title']); ?>
                 </span>
               </span>
-              <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($video['yt_id']); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div id="video-ctn">
+                  <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($video['yt_id']); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
               <div id="item-completion-ctn">
                 <button class="btn-red <?php if ($complete = Course::getCompletion($conn, $_GET['id'], $_SESSION['user_id'], $i)) {
                   echo 'completed'; } ?>" hierarchy="<?= $i;?>"><?php if ($complete) { echo 'Completed'; } else { echo 'Complete Item'; } ?></button>

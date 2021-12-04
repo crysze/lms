@@ -2,6 +2,8 @@
 
 const FORM = document.querySelector('form');
 
+const $spinner = document.querySelector('.loader');
+
 // Add an event listener to the form that is triggered by clicking the submit button
 
 FORM.addEventListener("submit", (event) => {
@@ -83,19 +85,30 @@ FORM.addEventListener("submit", (event) => {
     XHR.open('POST', 'register.php', true);
     XHR.onreadystatechange = () => {
       if (XHR.readyState === 4 && XHR.status === 200) {
+          $spinner.style.display = 'none';
           const returnData = XHR.responseText;
           $responseCtn.style.display = 'block';
           $responseTxt.innerHTML = returnData;
 
-        // Set all input fields as readonly if the registration was successful
+          if ($responseTxt.innerHTML.includes('successfully')) {
+            $responseTxt.style.background = 'white';
+          };
 
-        if (document.querySelector('#login-link')) {
+
           for (let index in inputIDs) {
-            document.getElementById(inputIDs[index]).readOnly = true;
-            document.getElementById(inputIDs[index]).style.opacity = '0.5';
+            document.getElementById(inputIDs[index]).readOnly = false;
+            document.getElementById(inputIDs[index]).style.opacity = '1';
           }
-          document.querySelector('#submit-btn-ctn').style.display = 'none';
-        }
+
+          // Set all input fields as readonly if the registration was successful
+
+          if (document.querySelector('#login-link')) {
+            for (let index in inputIDs) {
+              document.getElementById(inputIDs[index]).readOnly = true;
+              document.getElementById(inputIDs[index]).style.opacity = '0.5';
+            }
+            document.querySelector('#submit-btn-ctn').style.display = 'none';
+          }
       }
     }
 
@@ -106,6 +119,12 @@ FORM.addEventListener("submit", (event) => {
 
     // 'Processing' should be displayed while the script is loading returnData from register.php
 
+    for (let index in inputIDs) {
+      document.getElementById(inputIDs[index]).readOnly = true;
+      document.getElementById(inputIDs[index]).style.opacity = '0.5';
+    }
+
+    $spinner.style.display = 'block';
     $responseCtn.style.display = 'block';
     $responseTxt.innerHTML = 'Processing...';
 

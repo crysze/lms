@@ -23,8 +23,10 @@ $course = Course::getByID($conn, $_GET['id']);
   <body>
     <header>
       <div id="header">
-        <i class="fas fa-home"></i>
-        <span class="header-item"><a href="index.php">Home</a></span>
+        <a class="header-link" href="index.php">
+          <i class="fas fa-home"></i>
+          <span class="header-item">Home</span>
+        </a>
       <?php require 'header.php' ?>
       </div>
       <hr>

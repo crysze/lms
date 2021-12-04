@@ -34,6 +34,7 @@ if ($videoHierarchy.innerHTML === "1") {
 const $quizNav = document.querySelector('.quiz');
 const $videoNav = document.querySelector('#video-nav-ctn');
 const $completeBtn = document.querySelector('#item-completion-ctn');
+const $videoCtn = document.querySelector('#video-ctn');
 
 // Register the navigation items and the videos
 
@@ -66,19 +67,24 @@ for (const INDEX in $navigation) {
     $navigation[INDEX].classList.add('active');
     $content[INDEX].hidden = false;
 
+    if (screen.width <= 810) {
+
+      // The video container necessary for iframe responsiveness has to be removed when the quiz is selected (otherwise the quiz will be moved down by the padding applied to #video-ctn)
+
+      if ($navigation[INDEX].classList.contains('quiz')) {
+        $videoCtn.style.display = 'none';
+      }
+
+      // If a video is selected, the video container needs to be shown
+
+      if ($navigation[INDEX].classList.contains('video')) {
+        $videoCtn.style.display = 'block';
+      }
+    }
+
    // Store the number of the newly selected item for the next loop
 
     selectedVideo = INDEX;
-
-   // Hide the 'next' and 'previous' option and the completion button if the quiz is selected and show it again if it's not selected
-
-   if ($quizNav.classList.contains('active')) {
-      $videoNav.style.display = 'none';
-      $completeBtn.style.display = 'none';
-    } else {
-      $videoNav.style.display = 'flex';
-      $completeBtn.style.display = 'flex';
-    }
   });
 
 }

@@ -26,8 +26,10 @@ if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in']) {
   <body>
     <header>
       <div id="header">
-        <i class="fas fa-home"></i>
-        <span class="header-item"><a href="index.php">Home</a></span>
+        <a class="header-link" href="index.php">
+          <i class="fas fa-home"></i>
+          <span class="header-item">Home</a></span>
+        </a>
       </div>
       <hr>
     </header>
@@ -68,6 +70,7 @@ if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in']) {
         <div id="mandatory-fields">
           <span id="mandatory-fields-txt"><span class="asterisk">*</span> Mandatory fields</span>
         </div>
+        <div class="loader"></div>
         <div id="response-ctn">
           <div id="response">
             <i class="fas fa-exclamation-circle fa-2x"></i>
