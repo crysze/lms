@@ -7,6 +7,10 @@ const urlString = window.location.href;
 const Url = new URL(urlString);
 const course_id = Url.searchParams.get("id");
 
+// Register the spinner
+const $spinner = document.querySelector('.loader');
+
+
 // Add an event listener that is triggered by clicking the "Enroll" button
 
 $button.addEventListener("click", (event) => {
@@ -14,14 +18,25 @@ $button.addEventListener("click", (event) => {
   if ($button.innerHTML === "Enroll") {
 
   const XHR = new XMLHttpRequest();
-  XHR.open('Get', `enroll.php?id=${course_id}`, true);
+  XHR.open('Get', `ajax/enroll.php?id=${course_id}`, true);
+  XHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  XHR.onload = function() {
+    if (this.status >= 400) {
+        $button.innerHTML = 'There was an internal server error. Please try again later.';
+        return;
+      }
+  }
   XHR.onreadystatechange = () => {
-    if (XHR.readyState === 4 && XHR.status === 200) {
+    if (XHR.readyState === 4 && XHR.status >= 200 && XHR.status < 400) {
         const returnData = XHR.responseText;
-        setTimeout(() => {
-          $postEnroll.hidden = false;
-          $button.innerHTML = returnData;
-        }, 3000);
+
+        if (XHR.status === 201) {
+          setTimeout(() => {
+            $spinner.style.display = 'none';
+            $button.innerHTML = returnData;
+            $postEnroll.hidden = false;
+          }, 3000);
+        }
     }
   }
 
@@ -32,11 +47,15 @@ $button.addEventListener("click", (event) => {
   // 'Processing' should be displayed while the script is loading the response from enroll.php
 
   $button.innerHTML = 'Processing...';
+  $spinner.style.display = 'block';
+
   }
 
   // After the enrolment is completed, the button displays "Enter" and redirects the user to the course
 
   if ($button.innerHTML === "Enter") {
-  window.location.href = `course-items.php?id=${course_id}`;
+    const newURL = `course-items.php?id=${course_id}`
+    window.location.href = newURL;
   }
+
 });

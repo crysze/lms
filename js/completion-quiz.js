@@ -11,6 +11,10 @@ const $main = document.querySelector('main');
 const $continueBtn = document.querySelector('#quiz-continue');
 const $btnHierarchyQuiz = document.querySelector('.course-item.quiz').getAttribute('hierarchy');
 const $quizItem = document.querySelector('.course-item.quiz');
+// Register the spinner
+const $spinnerQuiz = document.querySelector('.loader-quiz');
+
+
 
 // Register the value of the currently selected radio button in a globally accessible variable
 
@@ -30,12 +34,12 @@ if ($quizButton.innerHTML === 'Completed') {
   for (const index in $labels) {
     const $labelValue = $labels[index].getAttribute('value');
     const XHR = new XMLHttpRequest();
-    XHR.open('Get', `completed-quiz.php?answer_id=${$labelValue}`, true);
+    XHR.open('Get', `ajax/completed-quiz.php?answer_id=${$labelValue}`, true);
+    XHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
     XHR.onreadystatechange = () => {
-        if (XHR.readyState === 4 && XHR.status === 200) {
+        if (XHR.readyState === 4 && XHR.status >= 200 && XHR.status <= 400) {
             const returnData = XHR.responseText;
-            console.log(returnData);
-            if (returnData.includes('Passed')) {
+            if (XHR.status === 202) {
                 $labels[index].style.background = 'lightGreen';
             }
       }
@@ -90,13 +94,21 @@ $quizButton.addEventListener('click', () => {
 
   // Pass on the course ID, the current item order / hierarchy number, the answer ID and the calculated new progress to completion-quiz.php
 
-  XHR.open('Get', `completion-quiz.php?course_id=${course_id}&item_id=${$btnHierarchyQuiz}&answer_id=${window.selectedValue}&new_progress=${newProgress}`, true);
+  XHR.open('Get', `ajax/completion-quiz.php?course_id=${course_id}&item_id=${$btnHierarchyQuiz}&answer_id=${window.selectedValue}&new_progress=${newProgress}`, true);
+  XHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  XHR.onload = function() {
+  if (this.status > 400) {
+    $quizButton.innerHTML = 'There was an internal server error. Please try again later.';
+    return;
+  }
+}
   XHR.onreadystatechange = () => {
-    if (XHR.readyState === 4 && XHR.status === 200) {
+    if (XHR.readyState === 4 && XHR.status >= 200 && XHR.status <= 400) {
 
         const returnData = XHR.responseText;
+        $spinnerQuiz.style.display = 'none';
 
-        if (returnData.includes('Failed')) {
+        if (XHR.status === 400) {
           quizFeedback('The answer you submitted was wrong. Please try again!');
           $quizButton.innerHTML = 'Submit Answer';
           return;
@@ -156,8 +168,11 @@ $quizButton.addEventListener('click', () => {
   // 'Processing' should be displayed while the script is loading returnData from completion-quiz.php
 
   $quizButton.innerHTML = 'Processing...';
+  $spinnerQuiz.style.display = 'block';
 
 });
+
+// Removes the overlay once 'continue' is clicked
 
 $continueBtn.addEventListener('click', () => {
     $overlay.style.display = 'none';

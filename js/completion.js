@@ -15,6 +15,10 @@ const course_id = Url.searchParams.get("id");
 const $courseItems = Array.from(document.querySelectorAll('.course-item'));
 const courseItemsNumber = $courseItems.length;
 
+// Register the spinner
+
+const $spinner = Array.from(document.querySelectorAll('.loader'));
+
 // Loop through all buttons and add a click event
 
 for (const INDEX in $btnRed) {
@@ -50,14 +54,22 @@ for (const INDEX in $btnRed) {
 
     // Pass on the course ID, the item ID and the new progress to completion.php via GET variables
 
-    XHR.open('Get', `completion.php?course_id=${course_id}&item_id=${btnHierarchy}&new_progress=${newProgress}`, true);
+    XHR.open('Get', `ajax/completion.php?course_id=${course_id}&item_id=${btnHierarchy}&new_progress=${newProgress}`, true);
+    XHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    XHR.onload = function() {
+      if (this.status >= 400) {
+        $btnRed[INDEX].innerHTML = 'There was an internal server error. Please try again later.';
+        return;
+      }
+    }
     XHR.onreadystatechange = () => {
-      if (XHR.readyState === 4 && XHR.status === 200) {
+      if (XHR.readyState === 4 && XHR.status >= 200 && XHR.status <= 500) {
 
           // Assign the response Test ('Completed') to the button and add the class 'completed'
 
           const returnData = XHR.responseText;
           $btnRed[INDEX].innerHTML = returnData;
+          $spinner[INDEX].style.display = 'none';
           $btnRed[INDEX].classList.add('completed');
 
           // Append a tick to the completed element
@@ -89,6 +101,8 @@ for (const INDEX in $btnRed) {
     // 'Processing' should be displayed while the script is loading returnData from completion.php
 
     $btnRed[INDEX].innerHTML = 'Processing...';
+    $spinner[INDEX].style.display = 'block';
+
 
   // Users should only be able to complete a specific item once
 

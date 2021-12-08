@@ -34,7 +34,7 @@ if ($videoHierarchy.innerHTML === "1") {
 const $quizNav = document.querySelector('.quiz');
 const $videoNav = document.querySelector('#video-nav-ctn');
 const $completeBtn = document.querySelector('#item-completion-ctn');
-const $videoCtn = document.querySelector('#video-ctn');
+const $videoCtn = document.querySelector('.video-ctn');
 
 // Register the navigation items and the videos
 
@@ -67,7 +67,7 @@ for (const INDEX in $navigation) {
     $navigation[INDEX].classList.add('active');
     $content[INDEX].hidden = false;
 
-    if (screen.width <= 810) {
+    if (screen.width <= 1200) {
 
       // The video container necessary for iframe responsiveness has to be removed when the quiz is selected (otherwise the quiz will be moved down by the padding applied to #video-ctn)
 

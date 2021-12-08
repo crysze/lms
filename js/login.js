@@ -78,42 +78,68 @@ FORM.addEventListener("submit", (event) => {
   const userFormData = new FormData(FORM);
 
   const XHR = new XMLHttpRequest();
-  XHR.open('POST', 'login.php', true);
+  XHR.open('POST', 'ajax/login.php', true);
+  XHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+  XHR.onload = function() {
+    if (this.status > 400) {
+        $responseCtn.style.display = 'block';
+        $responseTxt.innerHTML = 'There was an internal server error. Please try again later.';
+        return;
+    }
+  }
   XHR.onreadystatechange = () => {
     if (XHR.readyState === 4 && XHR.status >= 200) {
-      console.log(XHR.status);
       const returnData = XHR.responseText;
+      $spinner.style.display = 'none';
       $responseCtn.style.display = 'block';
       $responseTxt.innerHTML = returnData;
 
       // Set all input fields as readonly if the registration was successful
 
-      if ($responseTxt.innerHTML === "You've logged in successfully. Redirecting...") {
-
-        $spinner.style.visibility = 'visible';
-
-        for (let index in inputIDs) {
-          document.getElementById(inputIDs[index]).readOnly = true;
-          document.getElementById(inputIDs[index]).style.opacity = '0.5';
-        }
-        document.querySelector('#submit-btn-ctn').style.display = 'none';
+      if (XHR.status === 202) {
 
         // Redirect the user to index.php after 3 seconds
 
         setTimeout(() => {
-            course_id ? window.location.href = `course.php?id=${course_id}` : window.location.href = 'index.php';
+            if (course_id) {
+              window.location.href = `course.php?id=${course_id}`
+            } else {
+              window.location.href = 'index.php';
+            }
           }, 3000);
+      }
+
+      // The user should be able to re-enter his data after unsuccessful login
+
+      if (XHR.status === 400) {
+          for (let index in inputIDs) {
+            document.getElementById(inputIDs[index]).readOnly = false;
+            document.getElementById(inputIDs[index]).style.opacity = '1';
+          }
+          document.querySelector('#submit-btn-ctn').style.display = 'flex';
       }
     }
   }
 
-  // Send the form values to login.php
+ // Send the form values to login.php
+  setTimeout(() => {
+    XHR.send(userFormData);
+  }, 3000)
 
-  XHR.send(userFormData);
 
   // 'Processing' should be displayed while the script is loading returnData from login.php
 
+  $spinner.style.display = 'block';
   $responseCtn.style.display = 'block';
   $responseTxt.innerHTML = 'Processing...';
+
+  // After submitting data, the user shouldn't be able to edit the submission
+
+  for (let index in inputIDs) {
+    document.getElementById(inputIDs[index]).readOnly = true;
+    document.getElementById(inputIDs[index]).style.opacity = '0.5';
+  }
+  document.querySelector('#submit-btn-ctn').style.display = 'none';
+
 });
 

@@ -25,6 +25,8 @@ FORM.addEventListener("submit", (event) => {
   const $responseCtn = document.querySelector('#response-ctn');
   const $responseTxt = document.querySelector('#response-txt');
 
+  const $firstname = document.querySelector('#firstname');
+  const $lastname = document.querySelector('#lastname');
   const $email = document.querySelector('#email');
   const $password = document.querySelector('#password');
   const $passwordConfirm = document.querySelector('#confirm-password');
@@ -49,84 +51,113 @@ FORM.addEventListener("submit", (event) => {
     // Highlight the missing fields with a red border
 
     for (let index in missingInput) {
-      document.getElementById(missingInput[index]).style.border = '0.3rem solid var(--font-red)';
+      document.getElementById(missingInput[index]).style.border = '0.1rem solid var(--font-red)';
     }
 
     return;
   }
 
-    // Validate the email address with regEx
+  // Validate the email address with regEx
 
-    function validateEmail(email) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
-    }
+  function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(String(email).toLowerCase());
+  }
 
-    if (!validateEmail($email.value)) {
-      $responseCtn.style.display = 'block';
-      $responseTxt.innerHTML = "Invalid email address";
-      return;
-    }
-
-    // Check if the passwords match
-
-    if ($password.value !== $passwordConfirm.value) {
-
-      $responseCtn.style.display = 'block';
-      $responseTxt.innerHTML = "Passwords don't match";
-      return;
-    }
-
-    // Send Formdata with the FormData object through XHR to register.php and display the response text
-
-    const userFormData = new FormData(FORM);
-
-    const XHR = new XMLHttpRequest();
-    XHR.open('POST', 'register.php', true);
-    XHR.onreadystatechange = () => {
-      if (XHR.readyState === 4 && XHR.status === 200) {
-          $spinner.style.display = 'none';
-          const returnData = XHR.responseText;
-          $responseCtn.style.display = 'block';
-          $responseTxt.innerHTML = returnData;
-
-          if ($responseTxt.innerHTML.includes('successfully')) {
-            $responseTxt.style.background = 'white';
-          };
-
-
-          for (let index in inputIDs) {
-            document.getElementById(inputIDs[index]).readOnly = false;
-            document.getElementById(inputIDs[index]).style.opacity = '1';
-          }
-
-          // Set all input fields as readonly if the registration was successful
-
-          if (document.querySelector('#login-link')) {
-            for (let index in inputIDs) {
-              document.getElementById(inputIDs[index]).readOnly = true;
-              document.getElementById(inputIDs[index]).style.opacity = '0.5';
-            }
-            document.querySelector('#submit-btn-ctn').style.display = 'none';
-          }
-      }
-    }
-
-    // Send the form values to register.php
-    setTimeout(() => {
-      XHR.send(userFormData);
-    }, 3000)
-
-    // 'Processing' should be displayed while the script is loading returnData from register.php
-
-    for (let index in inputIDs) {
-      document.getElementById(inputIDs[index]).readOnly = true;
-      document.getElementById(inputIDs[index]).style.opacity = '0.5';
-    }
-
-    $spinner.style.display = 'block';
+  if (!validateEmail($email.value)) {
     $responseCtn.style.display = 'block';
-    $responseTxt.innerHTML = 'Processing...';
+    $responseTxt.innerHTML = "Invalid email address";
+    return;
+  }
+
+  // Check if the passwords match
+
+  if ($password.value !== $passwordConfirm.value) {
+
+    $responseCtn.style.display = 'block';
+    $responseTxt.innerHTML = "Passwords don't match";
+    return;
+  }
+
+  // Check if the passwords match
+
+  if ($firstname.value.length > 50) {
+
+    $responseCtn.style.display = 'block';
+    $responseTxt.innerHTML = "The first name is too long (character limit: 50)";
+    return;
+  }
+
+    if ($lastname.value.length > 50) {
+
+    $responseCtn.style.display = 'block';
+    $responseTxt.innerHTML = "The first name is too long (character limit: 50)";
+    return;
+  }
+
+  // Send Formdata with the FormData object through XHR to register.php and display the response text
+
+  const userFormData = new FormData(FORM);
+
+  const XHR = new XMLHttpRequest();
+  XHR.open('POST', 'ajax/register.php', true);
+
+  // Set the header to 'XMLHttpRequest' for ajax/register.php to check if this is set to prevent direct access to the PHP file
+
+  XHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+  XHR.onload = function() {
+    if (this.status > 400) {
+        $responseCtn.style.display = 'block';
+        $responseTxt.innerHTML = 'There was an internal server error. Please try again later.';
+        return;
+    }
+  }
+
+  XHR.onreadystatechange = () => {
+    if (XHR.readyState === 4 && XHR.status >= 200) {
+        $spinner.style.display = 'none';
+        const returnData = XHR.responseText;
+        $responseCtn.style.display = 'block';
+        $responseTxt.innerHTML = returnData;
+
+        if (XHR.status === 201) {
+          $responseTxt.style.background = 'white';
+        };
+
+
+        for (let index in inputIDs) {
+          document.getElementById(inputIDs[index]).readOnly = false;
+          document.getElementById(inputIDs[index]).style.opacity = '1';
+        }
+
+        // Set all input fields as readonly if the registration was successful
+
+        if (document.querySelector('#login-link')) {
+          for (let index in inputIDs) {
+            document.getElementById(inputIDs[index]).readOnly = true;
+            document.getElementById(inputIDs[index]).style.opacity = '0.5';
+          }
+          document.querySelector('#submit-btn-ctn').style.display = 'none';
+        }
+    }
+  }
+
+  // Send the form values to register.php
+  setTimeout(() => {
+    XHR.send(userFormData);
+  }, 3000)
+
+  // 'Processing' should be displayed while the script is loading returnData from register.php
+
+  for (let index in inputIDs) {
+    document.getElementById(inputIDs[index]).readOnly = true;
+    document.getElementById(inputIDs[index]).style.opacity = '0.5';
+  }
+
+  $spinner.style.display = 'block';
+  $responseCtn.style.display = 'block';
+  $responseTxt.innerHTML = 'Processing...';
 
 });
 
