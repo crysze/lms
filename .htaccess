@@ -1,0 +1,5 @@
+ErrorDocument 404 /page404.php
+php_flag display_errors Off
+
+
+
