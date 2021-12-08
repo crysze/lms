@@ -228,7 +228,7 @@ h3:hover {
   color: var(--font-red);
 }
 
-#logout {
+#logout, #not-found {
   text-align: center;
   font-weight: 600;
 }
@@ -244,6 +244,14 @@ h3:hover {
 
   main {
     padding-left: 8rem;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: none;
+  }
+
+  .fas.fa-caret-left:hover, .fas.fa-caret-right:hover {
+    color: var(--font-red);
   }
 }
 

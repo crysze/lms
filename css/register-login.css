@@ -27,6 +27,7 @@ h1 {
 label {
   font-size: 2.25rem;
   margin-right: 1rem;
+  text-align: end;
 }
 
 input[type="submit"] {
@@ -83,9 +84,11 @@ input[type="text"], input[type="password"] {
 
 #missing-fields, #mandatory-fields, #password-wrong, #email-taken, #response {
   margin-top: 2rem;
+  margin-bottom: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .fas.fa-exclamation-circle {
@@ -106,3 +109,25 @@ input[type="text"], input[type="password"] {
   color: var(--font-red);
 }
 
+@media screen and (max-width: 848px) {
+
+  main {
+    padding-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  input[type="text"], input[type="password"] {
+    margin-right: 1rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+
+  #response {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+}
