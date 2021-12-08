@@ -116,8 +116,6 @@ class Course {
       $stmt->bindValue(':progress', 0.00, PDO::PARAM_INT);
 
       if ($stmt->execute()) {
-        // $this->id = $conn->lastInsertId();
-
         return true;
         }
     }
