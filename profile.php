@@ -21,6 +21,7 @@ $enrolmentCount = count($enrolments, COUNT_NORMAL);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="img/cl-fav.png">
   <link rel="stylesheet" href="css/index.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/profile.css">

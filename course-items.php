@@ -38,6 +38,7 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/cl-fav.png">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/course-items.css">
     <script src="https://kit.fontawesome.com/5782589434.js" crossorigin="anonymous"></script>
@@ -88,7 +89,7 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
               <i class="fas fa-times fa-2x"></i>
             </a>
           </div>
-        <div id="video-ctn">
+        <div class="video-ctn">
         <?php
         $i = 0;
         foreach ($videos as $video) {
@@ -102,13 +103,14 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
                   <?= htmlspecialchars($video['title']); ?>
                 </span>
               </span>
-                <div id="video-ctn">
+                <div class="video-ctn">
                   <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/<?= htmlspecialchars($video['yt_id']); ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
               <div id="item-completion-ctn">
                 <button class="btn-red <?php if ($complete = Course::getCompletion($conn, $_GET['id'], $_SESSION['user_id'], $i)) {
                   echo 'completed'; } ?>" hierarchy="<?= $i;?>"><?php if ($complete) { echo 'Completed'; } else { echo 'Complete Item'; } ?></button>
               </div>
+              <div class="loader"></div>
             </div>
           <?php } ?>
           <!-- <div id="video-nav-ctn">
@@ -146,6 +148,7 @@ $answers = Course::getQuizAnswers($conn, $_GET['id']);
               <button class="question-complete-btn <?php if ($complete = Course::getCompletion($conn, $_GET['id'], $_SESSION['user_id'], ++$i)) {
                   echo 'completed'; } ?>" hierarchy="<?= $i;?>"><?php if ($complete) { echo 'Completed'; } else { echo 'Submit Answer'; } ?></button>
             </div>
+            <div class="loader-quiz"></div>
           </div>
         </div>
       </div>

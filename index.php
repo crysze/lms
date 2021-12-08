@@ -5,6 +5,8 @@ require 'classes/Course.php';
 $db = new Database();
 $conn = $db->getConn();
 
+// Fetch the courses by category from the database
+
 $PHPCourses = Course::getByCategory($conn, 'PHP / MySQL');
 $JSCourses = Course::getByCategory($conn, 'JavaScript');
 
@@ -15,6 +17,7 @@ $JSCourses = Course::getByCategory($conn, 'JavaScript');
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="img/cl-fav.png">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/reset.css">
     <script src="https://kit.fontawesome.com/5782589434.js" crossorigin="anonymous"></script>
@@ -32,7 +35,7 @@ $JSCourses = Course::getByCategory($conn, 'JavaScript');
       </header>
     </div>
         <div id="logo">
-          <img src="img/logo.png">
+          <img src="img/cl3_06-12.svg">
         </div>
     <main>
       <h2>PHP / MySQL</h2>
