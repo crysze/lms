@@ -81,9 +81,9 @@ FORM.addEventListener("submit", (event) => {
   XHR.open('POST', 'ajax/login.php', true);
   XHR.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   XHR.onload = function() {
-    if (this.status > 400) {
+    if (this.status > 400 && !this.status === 403) {
         $responseCtn.style.display = 'block';
-        $responseTxt.innerHTML = 'There was an internal server error. Please try again later.';
+        $responseTxt.innerHTML = 'There was an internal server error.<br> Please try again later.';
         return;
     }
   }
@@ -111,7 +111,7 @@ FORM.addEventListener("submit", (event) => {
 
       // The user should be able to re-enter his data after unsuccessful login
 
-      if (XHR.status === 400) {
+      if (XHR.status >= 400) {
           for (let index in inputIDs) {
             document.getElementById(inputIDs[index]).readOnly = false;
             document.getElementById(inputIDs[index]).style.opacity = '1';
