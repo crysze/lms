@@ -19,10 +19,14 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
   // The values sent through the FormData object are accessible via POST variables
   // Tie the POST values to the new instance of the user class
 
+  $activation_code = bin2hex(random_bytes(16));
+
   $user->firstname = $_POST['firstname'];
   $user->lastname = $_POST['lastname'];
   $user->email = $_POST['email'];
   $user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+  $user->activation_code = password_hash($activation_code, PASSWORD_DEFAULT);
+  $user->activation_expiry = date('Y-m-d H:i:s', time() + 1 * 24 * 60 * 60);
 
   // Check if an email address is already tied to an account in the database
 
@@ -35,8 +39,9 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
   // Create a new user account
 
   if ($user->create($conn)) {
+    $user->send_activation_email($user->email, $activation_code);
     http_response_code(201);
-    echo 'Your user account has been created successfully. Please <a href="user-login.php"><span id="login-link">log in here</span></a>.';
+    echo 'Your user account has been created successfully.<br> Please check your emails to activate your account.';
     return;
   }
 
