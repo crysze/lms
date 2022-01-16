@@ -44,14 +44,6 @@ h1 {
   margin-left: 1rem;
 }
 
-#login-link {
-  color: var(--font-red);
-}
-
-#login-link:hover {
-  color: black;
-}
-
 #login-prompt, #login-link {
   line-height: 3.2rem;
 }

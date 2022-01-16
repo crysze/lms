@@ -228,9 +228,17 @@ h3:hover {
   color: var(--font-red);
 }
 
-#logout, #not-found {
+#logout, #not-found, #activation-msg {
   text-align: center;
   font-weight: 600;
+}
+
+#login-link, #register-link {
+  color: var(--font-red);
+}
+
+#login-link:hover, #register-link:hover {
+  color: black;
 }
 
 #logo img {
