@@ -42,6 +42,34 @@ class User {
     public $password;
 
     /**
+     * The user's account activation code
+     *
+     * @var string
+     */
+    public $activation_code;
+
+    /**
+     * When the user's account activation window will have expired
+     *
+     * @var string
+     */
+    public $activation_expiry;
+
+    /**
+     * The URL of the site
+     *
+     * @var string
+     */
+    const APP_URL = 'http://localhost';
+
+    /**
+     * The sender address for the account verification email
+     *
+     * @var string
+     */
+    const SENDER_EMAIL_ADDRESS = 'no-reply@email.com';
+
+    /**
      * Creates a new user in the database
      *
      * @param $conn Database connection
@@ -50,8 +78,8 @@ class User {
      */
     public function create($conn) {
 
-      $sql = 'INSERT INTO user (firstname, lastname, email, password)
-              VALUES (:firstname, :lastname, :email, :password)';
+      $sql = 'INSERT INTO user (firstname, lastname, email, password, activation_code, activation_expiry)
+              VALUES (:firstname, :lastname, :email, :password, :activation_code, :activation_expiry)';
 
       $stmt = $conn->prepare($sql);
 
@@ -59,6 +87,8 @@ class User {
       $stmt->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
       $stmt->bindValue(':email', $this->email, PDO::PARAM_STR);
       $stmt->bindValue(':password', $this->password, PDO::PARAM_STR);
+      $stmt->bindValue(':activation_code', $this->activation_code, PDO::PARAM_STR);
+      $stmt->bindValue(':activation_expiry', $this->activation_expiry, PDO::PARAM_STR);
 
       if ($stmt->execute()) {
         $this->id = $conn->lastInsertId();
@@ -66,6 +96,129 @@ class User {
         return true;
         }
     }
+
+    /**
+     * Upon successful registration, an email is sent to the user with an email verification link they have to click to activate their account
+     *
+     * @param $email The user's email address
+     *
+     * @param $activation_code The activation code to be used as a GET parameter in the activation link
+     *
+     * @return void
+     */
+
+    public function send_activation_email($email, $activation_code) {
+
+      // Create the activation link
+
+      $activation_link = User::APP_URL . "/activate.php?email=$email&activation_code=$activation_code";
+
+      // Set email subject and body
+
+      $subject = 'Please activate your account';
+      $message = "Hi,<br><br>
+                  Please access the following link to activate your account:<br>
+                  <a href='$activation_link'>$activation_link</a>";
+
+      // Email header
+
+      $from = User::SENDER_EMAIL_ADDRESS;
+
+      $headers = "From: $from\r\n";
+      $headers .= 'MIME-Version: 1.0' . "\r\n";
+      $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+      // Send the email
+
+      mail($email, $subject, $message, $headers);
+    }
+
+    /** Deletes the user account tied to a specific ID
+     *
+     * @param $id The user's ID
+     *
+     * @return bool Returns true if the deletion has been performed successfully
+     */
+
+    public static function delete_user_by_id($conn, $id) {
+      $sql = 'DELETE FROM user
+      WHERE userid = :userid';
+
+      $stmt = $conn->prepare($sql);
+
+      $stmt->bindValue(':userid', $id, PDO::PARAM_INT);
+
+      if ($stmt->execute()) {
+        return true;
+      }
+    }
+
+    /**
+     * Either deletes a user after accessing the activation link if the activation timeframe has expired or activates the account if specifications are met
+     *
+     * @param $activation_code GET parameter from the activation link
+     *
+     * @param $email GET parameter which is the user's email address
+     *
+     * @return Arr || null
+     */
+
+    public static function handle_unverified_user($conn, $activation_code, $email) {
+      /* First SQL statement compares the expiry date to the current date which resolves to 0 (false) or 1 (true) and then assigns this value to 'expired' */
+      $sql = 'SELECT userid, activation_code, activation_expiry < now() AS expired
+              FROM user
+              WHERE active = 0 AND email = :email';
+
+      $stmt = $conn->prepare($sql);
+
+      $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+      $stmt->execute();
+
+      $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      // If the current date is after the expiry date, the account is deleted and null is returned
+
+      if (isset ($user['expired']) && isset($user['activation_code'])) {
+
+        // $user['expired'] is a string ("0" or "1") so has to be converted to an integer to be able to compare it against 1
+
+        if ((int)$user['expired'] === 1 && User::delete_user_by_id($conn, $user['userid'])) {
+          return null;
+        }
+
+        // If the GET parameter matches the stored activation code, the user is returned as an array
+
+        if (password_verify($activation_code, $user['activation_code'])) {
+          return $user;
+        }
+      }
+
+      // If none of the above is true, null is returned
+
+      return null;
+    }
+
+    /**
+     * Sets the active column of the user to 1 (true)
+     *
+     * @param $user_id The user's ID
+     *
+     * @return bool Return true if the activation was successful
+     */
+
+    public static function activate_user($conn, $user_id) {
+      $sql = 'UPDATE user
+      SET active = 1, activated_at = CURRENT_TIMESTAMP()
+      WHERE userid = :userid';
+
+      $stmt = $conn->prepare($sql);
+
+      $stmt->bindValue(':userid', $user_id, PDO::PARAM_INT);
+
+      return $stmt->execute();
+    }
+
+
 
     /**
      * Checks if a user with a given email address already exists in the database
@@ -91,6 +244,33 @@ class User {
       return true;
     } else {
       return false;
+    }
+  }
+
+  /**
+   * Checks if the account has been activated via email verification yet
+   *
+  * @param $conn Database connection
+  *
+  * @param $email User's email address
+  *
+  * @return bool True if the account has already been activated
+   */
+  public static function is_user_active($conn, $email) {
+    $sql = 'SELECT *
+    FROM user
+    WHERE email = :email';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row['active']) {
+    return true;
+    } else {
+    return false;
     }
   }
 
