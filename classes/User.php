@@ -63,13 +63,6 @@ class User {
     const APP_URL = 'http://localhost';
 
     /**
-     * The sender address for the account verification email
-     *
-     * @var string
-     */
-    const SENDER_EMAIL_ADDRESS = 'no-reply@email.com';
-
-    /**
      * Creates a new user in the database
      *
      * @param $conn Database connection
@@ -122,10 +115,7 @@ class User {
 
       // Email header
 
-      $from = User::SENDER_EMAIL_ADDRESS;
-
-      $headers = "From: $from\r\n";
-      $headers .= 'MIME-Version: 1.0' . "\r\n";
+      $headers = 'MIME-Version: 1.0' . "\r\n";
       $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
       // Send the email
