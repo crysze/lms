@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 07. Dez 2021 um 21:16
+-- Erstellungszeit: 17. Jan 2022 um 21:09
 -- Server-Version: 10.4.20-MariaDB
 -- PHP-Version: 8.0.9
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `lms`
 --
-CREATE DATABASE IF NOT EXISTS `lms` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `lms`;
 
 -- --------------------------------------------------------
 
@@ -97,27 +95,6 @@ CREATE TABLE `completion` (
   `item_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten für Tabelle `completion`
---
-
-INSERT INTO `completion` (`completion_id`, `course_id`, `user_id`, `item_id`) VALUES
-(45, 1, 29, 1),
-(46, 1, 29, 2),
-(47, 3, 29, 1),
-(48, 8, 29, 3),
-(49, 5, 29, 1),
-(52, 1, 29, 3),
-(53, 5, 29, 2),
-(54, 5, 29, 3),
-(55, 6, 29, 2),
-(56, 8, 29, 4),
-(57, 2, 29, 4),
-(58, 4, 29, 1),
-(59, 4, 29, 2),
-(60, 4, 29, 3),
-(61, 6, 29, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -159,21 +136,6 @@ CREATE TABLE `enrolment` (
   `date` date NOT NULL,
   `progress` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `enrolment`
---
-
-INSERT INTO `enrolment` (`id`, `user_id`, `course_id`, `date`, `progress`) VALUES
-(17, 29, 6, '2021-10-02', '100.00'),
-(18, 29, 3, '2021-10-02', '50.00'),
-(19, 29, 5, '2021-10-02', '100.00'),
-(22, 29, 1, '2021-10-17', '100.00'),
-(23, 29, 2, '2021-10-17', '25.00'),
-(24, 29, 4, '2021-10-31', '100.00'),
-(25, 29, 7, '2021-11-09', '0.00'),
-(26, 29, 8, '2021-11-09', '50.00'),
-(27, 55, 3, '2021-12-04', '0.00');
 
 -- --------------------------------------------------------
 
@@ -233,41 +195,20 @@ CREATE TABLE `user` (
   `firstname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `lastname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `activation_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `activated_at` datetime DEFAULT NULL,
+  `activation_expiry` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`userid`, `firstname`, `lastname`, `email`, `password`) VALUES
-(28, 'Christina', 'Stoll', 'chr@sto.at', '$2y$10$DPZDnb.hVyeFhy6L120.DuoreFdvSvoGsxF/8oTRky.wdtxR4waq6'),
-(29, 'Christina', 'Stoll', 'christina.stoll@gmx.at', '$2y$10$cJ1154bdN4NzprTdq5LAiucFZiuz37RQX4doGCeRQx19Ek.IvS9Bu'),
-(30, 'Christina', 'Stoll', 'christina@gmx.at', '$2y$10$.rEtTxI98sKCnfsftEOe.u8CkgSTExRDTbNm1iEzQtHGz.NZmvybi'),
-(31, 'Christina', 'Stoll', 'quaist@gmx.net', '$2y$10$iO1UrBQNCdxzyFa0/NGtp.9nnz9PtjcvKpLsOBAmP0r5JCVL27kai'),
-(32, 'Christina', 'Stoll', 'def@abc.de', '$2y$10$JIl2OJ7MLI0tzXu7AN4mhOo.vq8e5YvlXFop/GENUJcEbazSCKQM6'),
-(33, 'Christina', 'Stoll', 'abc@de.com', '$2y$10$AIWc7Kq08JERYIfNFWyfNuEkHFkH2jGR1r6t4hRUnxLMKPY8s7U3u'),
-(34, 'Christina', 'Stoll', 'asdfadf@wer.de', '$2y$10$j0GHeMEklEb2JMZjalFJ1e8Dh2mAxkY3Cpf4jRHJ6WkV.B1HjIz1.'),
-(35, 'Christina', 'Stoll', 'quaist@gmx.com', '$2y$10$vtLLphIO2VZIZY5hCglBdez0lx4uAHcCGuqPby1J.EAqWt1Ygf3J6'),
-(36, 'Christina', 'Stoll', 'quaist@gmx.at', '$2y$10$FZKzoFwSF6KEKRZ5URCvFeTrR5UvuH638tPib3t5zlHdg3LWUx5ru'),
-(37, 'Christina', 'Stoll', 'quaist@gmx.co.uk', '$2y$10$3XZZLbSSdSedNqQbXYi0keTZvBHyS/lAMhTADkcA/7XaGImAviYny'),
-(38, 'Christina', 'Stoll', 'cus@klsajfl.at', '$2y$10$Bgb/IUada0WoQydHb7yi1eHcMIDw9EmcWQWO0msgpFT13ZCOVVhFO'),
-(39, 'Christina', 'Stoll', 'quaist@gmx.org', '$2y$10$AKwcK4ncpyU0HX.oGOCL/.Glwgafh8dEQcOJ0hGgRXwfpKxaPxvfC'),
-(40, 'Christina', 'Stoll', 'quaist@gmx.ca', '$2y$10$5KcOEiGdvt4h7p/rkpgDb.cLPd4P/8tvgBvfB4FpUMiQ406oFwzti'),
-(41, 'Christina', 'Stoll', 'ch@wlejw.at', '$2y$10$8IMZdNc20JOi/.N7kbSi5uYoaOwMQ2IbQ26fDCl2vGGJ8o/.1OZ0i'),
-(42, 'Maximilian', 'Mustermann', 'm.mustermann@gmx.at', '$2y$10$/bRzabwkayUThXVq7a5qmei8FKRMza4F.Y77eAHglyN9QGPLpDcSe'),
-(44, 'Test', 'Test', 'test@test3.de', '$2y$10$1OZWtd0.ZfRwZ/2fVU7V1ugPgdZwOdkCobFKMQo6bLqNKxPibOfKO'),
-(45, 'Test', 'Test', 'test@test4.de', '$2y$10$oGYXZpbFdWoi4LWX2ytrNeWhD0i/FUxSqS/GfWgQKoo6BnTk7Fe1O'),
-(46, 'Test', 'Test', 'test@test5.de', '$2y$10$OtOHPTJhMxFHKq4RtpizbebTZxZuRjJ4auj3bqmApiLVg1PH1db5a'),
-(47, 'Test', 'Test', 'test@test6.de', '$2y$10$Fdl6VsHlJJJuZsSoTVB5Q.R2QxqHpShb02Mi519/Hw0OUnSJZ0k6i'),
-(48, 'abc', 'def', 'at@cd.at', '$2y$10$QEyWeXr2Yv5WfVzm1AMOz.m9FgdMyJsye8ZpsvzSJCXQltzbHkZoC'),
-(49, 'abc', 'def', 'a@b.c', '$2y$10$vS90lmYT.vdNE4EKL.rtdON7BvQjOBzYe/fXdLWH/62LqqTEHV1Fu'),
-(50, 'abc', 'def', 'b@c.d', '$2y$10$vWpa9xWBrv4hpuUniFo9U.Oo2W1.OyNxZAymJ2FqmYykcUEbNSUvm'),
-(51, 'abc', 'def', 'c@d.e', '$2y$10$mvBqxFXAeIyXCCkte8B0t.O8v0QSZgE4LWV6apSVB85ELLUOu4eBq'),
-(52, 'John', 'Doe', 'j@doe.com', '$2y$10$mmYYouWdbfY9xjpHi3N8PONHTNcajf50lHl.oFp4sL1M0xiY6p7YS'),
-(53, 'Charles', 'Test', 'c@test.com', '$2y$10$dpl7lMowuVr4OPh4yfq8RuMSkBg4.v2pGIZDa7HK9uR.0TvzgYkKm'),
-(54, 'Christina', 'Stoll', 'ch@st.at', '$2y$10$fj8suK3k5Lrdd3T2dyzK1eLLPMGAfunYIaMjKv82GhvnLXSdS7nI2'),
-(55, 'abc', 'def', 'abc@def.at', '$2y$10$ZiBW/vhLKW8oAQ6LXXiHpOfPiTlfKZrXSUVcY2ArH5K7K.SBRR4rS');
+INSERT INTO `user` (`userid`, `firstname`, `lastname`, `email`, `password`, `active`, `activation_code`, `activated_at`, `activation_expiry`) VALUES
+(72, 'Christina', 'Stoll', 'christina.stoll@gmx.at', '$2y$10$u14JhXBnN08Ww6PFlbSKW.FrLB5ZTIIs9VVZSihIjDn7OQL/CBXsm', 1, '$2y$10$2kFX8ebJCupte/ckVTWxS.Ejx5hDbuyrGz4q/NqcO95k.4L20QIwm', '2022-01-11 22:01:57', '2022-01-12 21:58:58'),
+(77, 'Fiona', 'Roberts', 'quaist@gmx.net', '$2y$10$0yUCXHo3cKnjmq3MTgzXteLGkO5c6m4YKaL/1qwfXYSmi5OBLgGBe', 0, '$2y$10$9/sz6UhzznUR9hfYHyKFwOnWllsAGY6OFKxUEwE27zzyG2KrDOCZi', NULL, '2022-01-13 22:13:03');
 
 -- --------------------------------------------------------
 
@@ -392,7 +333,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT für Tabelle `completion`
 --
 ALTER TABLE `completion`
-  MODIFY `completion_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `completion_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT für Tabelle `course`
@@ -404,7 +345,7 @@ ALTER TABLE `course`
 -- AUTO_INCREMENT für Tabelle `enrolment`
 --
 ALTER TABLE `enrolment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT für Tabelle `image`
@@ -422,7 +363,7 @@ ALTER TABLE `question`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT für Tabelle `video`
