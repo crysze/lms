@@ -123,22 +123,21 @@ FORM.addEventListener("submit", (event) => {
 
         if (XHR.status === 201) {
           $responseTxt.style.background = 'white';
+
+          // Set all input fields as readonly if the registration was successful
+
+          for (let index in inputIDs) {
+            document.getElementById(inputIDs[index]).readOnly = true;
+            document.getElementById(inputIDs[index]).style.opacity = '0.5';
+          }
+          document.querySelector('#submit-btn-ctn').style.display = 'none';
+          return;
         };
 
 
         for (let index in inputIDs) {
           document.getElementById(inputIDs[index]).readOnly = false;
           document.getElementById(inputIDs[index]).style.opacity = '1';
-        }
-
-        // Set all input fields as readonly if the registration was successful
-
-        if (document.querySelector('#login-link')) {
-          for (let index in inputIDs) {
-            document.getElementById(inputIDs[index]).readOnly = true;
-            document.getElementById(inputIDs[index]).style.opacity = '0.5';
-          }
-          document.querySelector('#submit-btn-ctn').style.display = 'none';
         }
     }
   }
