@@ -245,6 +245,27 @@ h3:hover {
   height: 15rem;
 }
 
+#search {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+#search input {
+  border-radius: 1rem;
+  height: 3rem;
+  padding: 0.5rem;
+}
+
+input::placeholder {
+  font-size: 1.25rem;
+}
+
+.fa-magnifying-glass {
+  padding-top: 0.5rem;
+  margin-left: 0.25rem;
+}
+
 @media screen and (max-width: 848px) {
   .widget-ctn {
     width: 49rem;
