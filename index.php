@@ -42,8 +42,11 @@ $JSCourses = Course::getByCategory($conn, 'JavaScript');
         <input type="text" placeholder="Search for content...">
         <i class="fa-solid fa-magnifying-glass"></i>
       </div>
-      <select name="search-suggestions" id="search-suggestions">
-      </select>
+      <div id="search-suggestions">
+        <div id="suggestions-ctn">
+          <span id="suggestions-title">Suggestions</span>
+        </div>
+      </div>
       <h2>PHP / MySQL</h2>
       <div class="slider">
         <i class="fas fa-caret-left fa-5x"></i>
