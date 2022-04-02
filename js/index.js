@@ -1,5 +1,96 @@
 'use strict';
 
+// Search funtion
+
+// Register the input field, define an array with set tags and another empty array to fill with tags that fit the user's input
+
+const searchInput = document.querySelector('input');
+
+// A yet empty array that will be filled via fetch API with all current tags from the database
+
+const searchTags = [];
+
+async function fetchTags() {
+  let response = await fetch('ajax/tags.php', {
+
+    // This header has to be set manually with the fetch API, if the ajax PHP files should be protected from being accessed directly when users access their URLs (see first line of code of all ajax PHP files)
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  });
+
+  // If a successful status code of 200 is sent back, the JSON file is parsed into an object and then converted into an array
+
+  if (response.status === 200) {
+      let data = await response.text();
+      let JSONObj = JSON.parse(data);
+      for(let value of JSONObj)
+        searchTags.push(value);
+  } else return;
+}
+
+fetchTags();
+
+const searchMatches = [];
+const suggestionsCtn = document.querySelector('#suggestions-ctn');
+
+// Whenever the user inputs sth. into the input field, a callback function is executed that adds and subtracts matching tags
+
+searchInput.addEventListener('input', () => {
+
+  // Make suggestions visible when the user starts typing in the search fields
+
+  suggestionsCtn.style.visibility = 'visible';
+
+  // Get all suggestion items and remove them each time the input is updated by the user so as not to have duplicate tags showing up
+
+  let suggestionItems = Array.from(document.querySelectorAll('.suggestion-item'));
+
+  if (suggestionItems) {
+    for (let suggestionItem of suggestionItems) {
+      suggestionsCtn.removeChild(suggestionItem);
+    }
+  }
+
+  searchTags.forEach((element) => {
+
+    // If a user's input matches an element from the array and this element is not yet added, it will get pushed as a new value to the array
+
+    if (element.toLowerCase().startsWith(searchInput.value.toLowerCase()) && !searchMatches.includes(element)) {
+          searchMatches.push(element);
+    }
+
+    // Continuously check with each new input if strings already included in the array still match the input - if not, remove them from the array
+
+    if (searchMatches.length !== 0 && searchMatches.includes(element) && !element.toLowerCase().startsWith(searchInput.value.toLowerCase())) {
+      let index = searchMatches.indexOf(element);
+      searchMatches.splice(index, 1);
+    }
+  });
+
+  // Display "No suggestions" if no string is matched in the search matches array
+
+  document.querySelector('#suggestions-title').innerHTML = searchMatches.length === 0 ? 'No suggestions' : 'Suggestions';
+
+  // With each new input, the updated search matches array is converted into span elements to show up as suggestions
+
+  searchMatches.forEach((element) => {
+
+    // Get the length of the user's input string, separate it from the rest of the matched word and highlight the part the user already typed in in red
+
+    let inputLength = searchInput.value.length;
+    let matchedText = element.slice(0, inputLength);
+    let restText = element.slice(inputLength);
+
+    let span = document.createElement('span');
+    span.classList.add('suggestion-item');
+    span.innerHTML = `<a href="search.php?result=${element}"><span class="matched-text">${matchedText}</span>${restText}</a>`;
+    suggestionsCtn.appendChild(span);
+  });
+});
+
+// Sliders
+
 // Register left and right arrow as well as the slider container - all elements are assigned to an array where a for loop can then be used to iterate over them all
 
 const arrowLeft = Array.from(document.querySelectorAll('.fa-caret-left'));
