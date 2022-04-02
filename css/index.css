@@ -124,14 +124,6 @@ main {
   padding-top: 2rem;
 }
 
-.fas.fa-caret-left {
-  padding-right: 2rem;
-}
-
-.fas.fa-caret-right {
-  padding-left: 2rem;
-}
-
 .fas.fa-caret-left:hover, .fas.fa-caret-right:hover {
   color: black;
   cursor: pointer;
@@ -248,7 +240,6 @@ h3:hover {
 #search {
   display: flex;
   justify-content: center;
-  margin-bottom: 3rem;
 }
 
 #search input {
@@ -264,6 +255,35 @@ input::placeholder {
 .fa-magnifying-glass {
   padding-top: 0.5rem;
   margin-left: 0.25rem;
+}
+
+#search-suggestions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.suggestion-item:hover {
+  background-color: white;
+  font-style: italic;
+  cursor: pointer;
+}
+
+#suggestions-ctn {
+  visibility: hidden;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+#suggestions-title {
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+
+.matched-text {
+  color: var(--font-red);
+  font-weight: 700;
 }
 
 @media screen and (max-width: 848px) {
@@ -297,12 +317,5 @@ input::placeholder {
 
   main {
     padding-left: 1rem;
-  }
-}
-
-@media screen and (max-width: 358px) {
-  .fas.fa-caret-right, .fas.fa-caret-left {
-    padding-left: 0;
-    padding-right: 0;
   }
 }
