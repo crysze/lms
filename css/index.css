@@ -255,12 +255,18 @@ input::placeholder {
 .fa-magnifying-glass {
   padding-top: 0.5rem;
   margin-left: 0.25rem;
+  cursor: pointer;
 }
 
 #search-suggestions {
   display: flex;
   justify-content: center;
   margin-bottom: 3rem;
+}
+
+#search-results {
+  font-size: 3rem;
+  line-height: 60%;
 }
 
 .suggestion-item:hover {
