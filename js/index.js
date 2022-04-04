@@ -1,93 +1,124 @@
 'use strict';
 
-// Search funtion
+// Search function
 
 // Register the input field, define an array with set tags and another empty array to fill with tags that fit the user's input
 
-const searchInput = document.querySelector('input');
+// Only apply search logic if the input field exists (only index.php)
 
-// A yet empty array that will be filled via fetch API with all current tags from the database
+if (document.querySelector('input') !== null) {
 
-const searchTags = [];
+  const searchInput = document.querySelector('input');
 
-async function fetchTags() {
-  let response = await fetch('ajax/tags.php', {
+  // Clicking on the magnifying glass will take users to the search results page
 
-    // This header has to be set manually with the fetch API, if the ajax PHP files should be protected from being accessed directly when users access their URLs (see first line of code of all ajax PHP files)
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest'
+  const searchGlass = document.querySelector('.fa-magnifying-glass');
+  searchGlass.addEventListener('click', () => {
+    window.location.href = `search.php?q=${searchInput.value}`;
+  });
+
+  // Pressing the enter key will also take the user to the search results page
+
+  searchInput.addEventListener('keyup', (event) => {
+    if (event.keyCode === 13) {
+      window.location.href = `search.php?q=${searchInput.value}`;
     }
   });
 
-  // If a successful status code of 200 is sent back, the JSON file is parsed into an object and then converted into an array
-
-  if (response.status === 200) {
-      let data = await response.text();
-      let JSONObj = JSON.parse(data);
-      for(let value of JSONObj)
-        searchTags.push(value);
-  } else return;
-}
-
-fetchTags();
-
-const searchMatches = [];
-const suggestionsCtn = document.querySelector('#suggestions-ctn');
-
-// Whenever the user inputs sth. into the input field, a callback function is executed that adds and subtracts matching tags
-
-searchInput.addEventListener('input', () => {
-
-  // Make suggestions visible when the user starts typing in the search fields
-
-  suggestionsCtn.style.visibility = 'visible';
-
-  // Get all suggestion items and remove them each time the input is updated by the user so as not to have duplicate tags showing up
-
-  let suggestionItems = Array.from(document.querySelectorAll('.suggestion-item'));
-
-  if (suggestionItems) {
-    for (let suggestionItem of suggestionItems) {
-      suggestionsCtn.removeChild(suggestionItem);
+  // Execute a function when the user releases a key on the keyboard
+  searchInput.addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      document.getElementById("myBtn").click();
     }
+  });
+
+  // A yet empty array that will be filled via fetch API with all current tags from the database
+
+  const searchTags = [];
+
+  async function fetchTags() {
+    let response = await fetch('ajax/tags.php', {
+
+      // This header has to be set manually with the fetch API, if the ajax PHP files should be protected from being accessed directly when users access their URLs (see first line of code of all ajax PHP files)
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    });
+
+    // If a successful status code of 200 is sent back, the JSON file is parsed into an object and then converted into an array
+
+    if (response.status === 200) {
+        let data = await response.text();
+        let JSONObj = JSON.parse(data);
+        for(let value of JSONObj)
+          searchTags.push(value);
+    } else return;
   }
 
-  searchTags.forEach((element) => {
+  fetchTags();
 
-    // If a user's input matches an element from the array and this element is not yet added, it will get pushed as a new value to the array
+  const searchMatches = [];
+  const suggestionsCtn = document.querySelector('#suggestions-ctn');
 
-    if (element.toLowerCase().startsWith(searchInput.value.toLowerCase()) && !searchMatches.includes(element)) {
-          searchMatches.push(element);
+  // Whenever the user inputs sth. into the input field, a callback function is executed that adds and subtracts matching tags
+
+  searchInput.addEventListener('input', () => {
+
+    // Make suggestions visible when the user starts typing in the search fields
+
+    suggestionsCtn.style.visibility = 'visible';
+
+    // Get all suggestion items and remove them each time the input is updated by the user so as not to have duplicate tags showing up
+
+    let suggestionItems = Array.from(document.querySelectorAll('.suggestion-item'));
+
+    if (suggestionItems) {
+      for (let suggestionItem of suggestionItems) {
+        suggestionsCtn.removeChild(suggestionItem);
+      }
     }
 
-    // Continuously check with each new input if strings already included in the array still match the input - if not, remove them from the array
+    searchTags.forEach((element) => {
 
-    if (searchMatches.length !== 0 && searchMatches.includes(element) && !element.toLowerCase().startsWith(searchInput.value.toLowerCase())) {
-      let index = searchMatches.indexOf(element);
-      searchMatches.splice(index, 1);
-    }
+      // If a user's input matches an element from the array and this element is not yet added, it will get pushed as a new value to the array
+
+      if (element.toLowerCase().startsWith(searchInput.value.toLowerCase()) && !searchMatches.includes(element)) {
+            searchMatches.push(element);
+      }
+
+      // Continuously check with each new input if strings already included in the array still match the input - if not, remove them from the array
+
+      if (searchMatches.length !== 0 && searchMatches.includes(element) && !element.toLowerCase().startsWith(searchInput.value.toLowerCase())) {
+        let index = searchMatches.indexOf(element);
+        searchMatches.splice(index, 1);
+      }
+    });
+
+    // Display "No suggestions" if no string is matched in the search matches array
+
+    document.querySelector('#suggestions-title').innerHTML = searchMatches.length === 0 ? 'No suggestions' : 'Suggestions';
+
+    // With each new input, the updated search matches array is converted into span elements to show up as suggestions
+
+    searchMatches.forEach((element) => {
+
+      // Get the length of the user's input string, separate it from the rest of the matched word and highlight the part the user already typed in in red
+
+      let inputLength = searchInput.value.length;
+      let matchedText = element.slice(0, inputLength);
+      let restText = element.slice(inputLength);
+
+      let span = document.createElement('span');
+      span.classList.add('suggestion-item');
+      span.innerHTML = `<a href="search.php?q=${element}"><span class="matched-text">${matchedText}</span>${restText}</a>`;
+      suggestionsCtn.appendChild(span);
+    });
   });
-
-  // Display "No suggestions" if no string is matched in the search matches array
-
-  document.querySelector('#suggestions-title').innerHTML = searchMatches.length === 0 ? 'No suggestions' : 'Suggestions';
-
-  // With each new input, the updated search matches array is converted into span elements to show up as suggestions
-
-  searchMatches.forEach((element) => {
-
-    // Get the length of the user's input string, separate it from the rest of the matched word and highlight the part the user already typed in in red
-
-    let inputLength = searchInput.value.length;
-    let matchedText = element.slice(0, inputLength);
-    let restText = element.slice(inputLength);
-
-    let span = document.createElement('span');
-    span.classList.add('suggestion-item');
-    span.innerHTML = `<a href="search.php?result=${element}"><span class="matched-text">${matchedText}</span>${restText}</a>`;
-    suggestionsCtn.appendChild(span);
-  });
-});
+}
 
 // Sliders
 
@@ -112,6 +143,12 @@ for (let i = 0; i < sliderCtn.length; i++) {
 
   const widgetWidth = 24.7;
 
+  // Don't display the right arrow if there's no elements to scroll sideways to (depending on device / screen width)
+
+  if ((sliderCtn[i].childElementCount <= 3 && noOfCourses === 3) || (sliderCtn[i].childElementCount <= 2 && noOfCourses === 2) || (sliderCtn[i].childElementCount <= 1 && noOfCourses === 1)) {
+        arrowRight[i].style.visibility = 'hidden';
+  }
+
   // Create one function for each arrow that checks whether the conditions are met to display them - the left arrow should only be displayed if "scrolling" to the left is possible and vice versa for the right arrow
 
   function arrowLeftVisibility() {
@@ -134,6 +171,8 @@ for (let i = 0; i < sliderCtn.length; i++) {
 
     const allCourses = sliderCtn[i].querySelectorAll('.widget');
     const sliderEndNumber = (allCourses.length - noOfCourses) * widgetWidth;
+
+    console.log(allCourses);
 
     // If the transform property has a translateX value that was calculated before, there are no more courses to "scroll" and therefore the right arrow is hidden - otherwise it's visible
 
@@ -168,7 +207,6 @@ for (let i = 0; i < sliderCtn.length; i++) {
     const currentTranslateX = sliderCtn[i].style.transform.replace(/[^\d.]/g, '');
     const newTranslateX = -currentTranslateX - widgetWidth;
     sliderCtn[i].style.transform = `translateX(${newTranslateX}rem)`;
-    console.log(sliderCtn[i].style.transform);
     arrowLeftVisibility();
     arrowRightVisibility();
   });
