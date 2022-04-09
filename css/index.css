@@ -269,6 +269,25 @@ input::placeholder {
   line-height: 60%;
 }
 
+#no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.no-results-txt {
+  margin-top: 2rem;
+  font-weight: 600;
+}
+
+#no-results-link {
+  color: var(--font-red);
+}
+
+#no-results-link:hover {
+  color: black;
+}
+
 .suggestion-item:hover {
   background-color: white;
   font-style: italic;
