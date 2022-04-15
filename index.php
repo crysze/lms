@@ -28,7 +28,7 @@ $JSCourses = Course::getByCategory($conn, 'JavaScript');
     <div id="header-ctn">
       <header>
         <div id="header">
-        <?php require 'header.php' ?>
+        <?php require 'header.php';?>
         </div>
         <hr>
         <div class="space"></div>
@@ -38,6 +38,15 @@ $JSCourses = Course::getByCategory($conn, 'JavaScript');
           <img src="img/cl3_06-12.svg">
         </div>
     <main>
+      <div id="search">
+        <input type="text" placeholder="Search for content...">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      <div id="search-suggestions">
+        <div id="suggestions-ctn">
+          <span id="suggestions-title">Suggestions</span>
+        </div>
+      </div>
       <h2>PHP / MySQL</h2>
       <div class="slider">
         <i class="fas fa-caret-left fa-5x"></i>

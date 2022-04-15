@@ -69,11 +69,10 @@ class Course {
     /**
      * Get the course record based on the course category.
      *
-     * @param object $conn    Connection to the database
-     * @param int    $id      the course ID
-     * @param string $columns Optional list of columns for the select, defaults to *
+     * @param object $conn       Connection to the database
+     * @param int    $category   the course category
      *
-     * @return mixed An object of this class, or null if not found
+     * @return arr A set of arrays with the query results
      */
     public static function getByCategory($conn, $category) {
       $sql = "SELECT course.id, course.title, course.category, course.img, category.category_id, category.category_title, image.img_id, image.path
@@ -89,6 +88,77 @@ class Course {
       $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       return $rows;
+  }
+
+
+    /**
+     * Return courses whose description matches the user query
+     *
+     * @param object $conn    Connection to the database
+     * @param int    $input   The search query input by the user
+     *
+     * @return arr A set of arrays with the query results based on matching course descriptions
+     */
+    public static function userSearch($conn, $input) {
+      $sql = "SELECT course.id, course.title, course.description, image.path
+              FROM course
+              INNER JOIN image ON course.img = img_id";
+
+      $stmt = $conn->prepare($sql);
+
+      $stmt->execute();
+      $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      // Empty array to gather all course ID's where the user input matches part of the course description
+
+      $course_matches = [];
+
+      foreach ($rows as $row) {
+        if (str_contains(strtolower($row['description']), strtolower($input))) {
+           array_push($course_matches, intval($row['id']));
+        }
+      }
+
+      // Empty array to gather all results from the getByID method which returns the corresponding course as a class object
+
+      $course_matches_data = [];
+
+      foreach ($course_matches as $course_match) {
+        array_push($course_matches_data, Course::getByID($conn, $course_match));
+      }
+
+      return $course_matches_data;
+  }
+
+      /**
+     * Return courses whose assigned tags match the user query
+     *
+     * @param object $conn    Connection to the database
+     * @param int    $input   The search query input by the user
+     *
+     * @return arr A set of arrays with the query results based on matching course tags
+     */
+    public static function tagSearch($conn, $input) {
+      $sql = "SELECT tagging.tag_id, tagging.course_id, tag.tag_id, tag.tag_title
+              FROM tagging
+              INNER JOIN tag ON tagging.tag_id = tag.tag_id
+              WHERE LOWER(tag.tag_title) = LOWER(:input)";
+
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(':input', $input, PDO::PARAM_STR);
+
+      $stmt->execute();
+      $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      $courseIDs = array_column($rows, 'course_id');
+
+      $course_matches = [];
+
+      foreach ($courseIDs as $courseID) {
+        array_push($course_matches, Course::getByID($conn, $courseID));
+      }
+
+      return $course_matches;
   }
 
     /**
