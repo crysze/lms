@@ -56,13 +56,6 @@ class User {
     public $activation_expiry;
 
     /**
-     * The URL of the site
-     *
-     * @var string
-     */
-    const APP_URL = 'http://localhost';
-
-    /**
      * Creates a new user in the database
      *
      * @param $conn Database connection
@@ -102,25 +95,31 @@ class User {
 
     public function send_activation_email($email, $activation_code) {
 
+      require '../mail/mail.php';
+
       // Create the activation link
 
-      $activation_link = User::APP_URL . "/activate.php?email=$email&activation_code=$activation_code";
+      $activation_link = "http://{$_SERVER['SERVER_NAME']}" . "/activate.php?email=$email&activation_code=$activation_code";
 
       // Set email subject and body
 
-      $subject = 'Please activate your account';
-      $message = "Hi,<br><br>
-                  Please access the following link to activate your account:<br>
-                  <a href='$activation_link'>$activation_link</a>";
+      $text = "Hi,<br><br>
+      Please access the following link to activate your account:<br>
+      <a href='$activation_link'>$activation_link</a>";
 
-      // Email header
+      $message = str_replace('%TEXT%', $text, $message);
 
-      $headers = 'MIME-Version: 1.0' . "\r\n";
-      $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+      // Set who the message is to be sent to
+      $mail->addAddress($email);
+
+      // Set the subject line
+      $mail->Subject = '[Code Loop] Please activate your account';
+
+      // Set the message
+      $mail->msgHTML($message);
 
       // Send the email
-
-      mail($email, $subject, $message, $headers);
+      $mail->send();
     }
 
     /** Deletes the user account tied to a specific ID
