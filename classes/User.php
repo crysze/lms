@@ -103,10 +103,11 @@ class User {
 
       // Set email subject and body
 
-      $subject = 'Please activate your account';
-      $message = "Hi,<br><br>
+      $text = "Hi,<br><br>
       Please access the following link to activate your account:<br>
       <a href='$activation_link'>$activation_link</a>";
+
+      $message = str_replace('%TEXT%', $text, $message);
 
       // Set who the message is to be sent to
       $mail->addAddress($email);

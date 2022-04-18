@@ -97,6 +97,11 @@ $mail->setFrom($email_from, 'Code Loop');
 //convert HTML into a basic plain-text alternative body
 $mail->CharSet = PHPMailer::CHARSET_UTF8;
 
+//Set HTML Template
+$email_template = '../mail/template.html';
+$message = file_get_contents($email_template);
+$message = str_replace('%LINK%', "http://{$_SERVER['SERVER_NAME']}", $message);
+
 //Attach an image file
 //$mail->addAttachment('images/phpmailer_mini.png');
 
