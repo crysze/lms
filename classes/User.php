@@ -256,11 +256,8 @@ class User {
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($row['active']) {
-    return true;
-    } else {
+    if (isset($row['active']) && $row['active']) return true;
     return false;
-    }
   }
 
   /**

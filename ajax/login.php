@@ -27,7 +27,7 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH
         return;
     } else if (!User::is_user_active($conn, $_POST['email'])) {
         http_response_code(403);
-        echo "Your email address hasn't been verified yet.<br>Please check your email inbox.";
+        echo "This email address hasn't been registered or verified yet.";
         return;
     }
 
