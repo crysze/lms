@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 17. Jan 2022 um 21:09
+-- Erstellungszeit: 18. Apr 2022 um 20:24
 -- Server-Version: 10.4.20-MariaDB
 -- PHP-Version: 8.0.9
 
@@ -187,6 +187,72 @@ INSERT INTO `question` (`id`, `course_id`, `text`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `tag`
+--
+
+CREATE TABLE `tag` (
+  `tag_id` int(11) NOT NULL,
+  `tag_title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `tag`
+--
+
+INSERT INTO `tag` (`tag_id`, `tag_title`) VALUES
+(7, 'Advanced'),
+(10, 'Basics'),
+(9, 'Databases'),
+(6, 'Fundamentals'),
+(1, 'JavaScript'),
+(3, 'MySQL'),
+(4, 'NodeJS'),
+(5, 'Object-oriented Programming'),
+(2, 'PHP');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `tagging`
+--
+
+CREATE TABLE `tagging` (
+  `tagging_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `tagging`
+--
+
+INSERT INTO `tagging` (`tagging_id`, `tag_id`, `course_id`) VALUES
+(1, 1, 4),
+(2, 1, 5),
+(3, 1, 8),
+(4, 1, 6),
+(5, 2, 1),
+(6, 2, 2),
+(7, 3, 3),
+(8, 3, 7),
+(9, 4, 6),
+(10, 4, 8),
+(11, 5, 2),
+(12, 5, 5),
+(13, 6, 1),
+(14, 6, 3),
+(15, 6, 6),
+(16, 6, 4),
+(17, 7, 7),
+(18, 7, 8),
+(19, 10, 4),
+(20, 10, 1),
+(21, 10, 3),
+(22, 10, 6);
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `user`
 --
 
@@ -207,8 +273,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userid`, `firstname`, `lastname`, `email`, `password`, `active`, `activation_code`, `activated_at`, `activation_expiry`) VALUES
-(72, 'Christina', 'Stoll', 'christina.stoll@gmx.at', '$2y$10$u14JhXBnN08Ww6PFlbSKW.FrLB5ZTIIs9VVZSihIjDn7OQL/CBXsm', 1, '$2y$10$2kFX8ebJCupte/ckVTWxS.Ejx5hDbuyrGz4q/NqcO95k.4L20QIwm', '2022-01-11 22:01:57', '2022-01-12 21:58:58'),
-(77, 'Fiona', 'Roberts', 'quaist@gmx.net', '$2y$10$0yUCXHo3cKnjmq3MTgzXteLGkO5c6m4YKaL/1qwfXYSmi5OBLgGBe', 0, '$2y$10$9/sz6UhzznUR9hfYHyKFwOnWllsAGY6OFKxUEwE27zzyG2KrDOCZi', NULL, '2022-01-13 22:13:03');
+(94, 'Christina', 'Stoll', 'christina.stoll@gmx.at', '$2y$10$PVd09cnGtOpjF9023RdpDOpTT8lrxtUBmzjYgftDjUe2bEu5YmY8e', 0, '$2y$10$hqMEtYQwSIy5pECG0jCZA.nUmgp./Gv1vtndaGsxdqXkv/s8zbEfC', NULL, '2022-04-18 18:40:29');
 
 -- --------------------------------------------------------
 
@@ -300,6 +365,21 @@ ALTER TABLE `question`
   ADD KEY `course_id_q` (`course_id`);
 
 --
+-- Indizes für die Tabelle `tag`
+--
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`tag_id`),
+  ADD KEY `tag_title` (`tag_title`);
+
+--
+-- Indizes für die Tabelle `tagging`
+--
+ALTER TABLE `tagging`
+  ADD PRIMARY KEY (`tagging_id`),
+  ADD KEY `course_id_tagging` (`course_id`),
+  ADD KEY `tag_id` (`tag_id`);
+
+--
 -- Indizes für die Tabelle `user`
 --
 ALTER TABLE `user`
@@ -360,10 +440,22 @@ ALTER TABLE `question`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT für Tabelle `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT für Tabelle `tagging`
+--
+ALTER TABLE `tagging`
+  MODIFY `tagging_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+  MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT für Tabelle `video`
@@ -407,6 +499,13 @@ ALTER TABLE `enrolment`
 --
 ALTER TABLE `question`
   ADD CONSTRAINT `course_id_q` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints der Tabelle `tagging`
+--
+ALTER TABLE `tagging`
+  ADD CONSTRAINT `course_id_tagging` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `tag_id` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`) ON DELETE CASCADE;
 
 --
 -- Constraints der Tabelle `video`
